@@ -1,36 +1,110 @@
-<section class="py-20 bg-slate-950">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex flex-col md:flex-row items-start md:items-end justify-between mb-12">
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <div class="flex items-center justify-between mb-8">
+    <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Trending</h2>
+    <a href="/collections/all" class="text-xs font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 px-4 py-2 rounded-full transition-colors">
+      View All &rarr;
+    </a>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    <!-- Product 1 -->
+    <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm hover:shadow-md transition-all flex flex-col justify-between group">
       <div>
-        <span class="text-xs font-bold text-amber-400 uppercase tracking-widest mb-2 block">Featured Products</span>
-        <h2 class="text-3xl md:text-5xl font-extrabold text-slate-100">
-          {{ section.settings.title | default: "Smart Stair Controllers & LED Lights" }}
-        </h2>
+        <div class="relative bg-slate-50 rounded-xl p-4 mb-4 flex items-center justify-center min-h-[180px]">
+          <span class="absolute top-3 left-3 bg-red-600 text-white text-[10px] font-extrabold px-2.5 py-1 rounded-md uppercase">BESTSELLER</span>
+          <img src="https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&w=400&q=80" alt="Relights Gen 3 Smart Staircase Motion Controller Kit" class="h-32 object-contain group-hover:scale-105 transition-transform">
+        </div>
+        <h3 class="font-bold text-sm text-slate-900 line-clamp-2">Relights Gen 3 Smart Staircase Motion Controller Kit</h3>
+        <div class="flex items-center gap-1 my-2 text-amber-500 text-xs font-bold">
+          <span>★ 4.9</span>
+          <span class="text-slate-400 font-normal">(182)</span>
+        </div>
+        <p class="text-xs text-slate-500 line-clamp-2 mb-3">Flagship dual PIR motion sensor controller with cascading step illumination.</p>
       </div>
-      <a href="/collections/all" class="mt-4 md:mt-0 text-sm font-bold text-amber-400 hover:text-amber-300 flex items-center gap-1">
-        View All Products &rarr;
-      </a>
+      <div>
+        <div class="flex items-baseline gap-2 mb-3">
+          <span class="text-lg font-black text-slate-900">Rs. 5,799.00</span>
+          <span class="text-xs text-slate-400 line-through">Rs. 6,999.00</span>
+        </div>
+        <a href="/collections/all" class="w-full bg-slate-950 hover:bg-blue-600 text-white text-xs font-bold py-2.5 rounded-xl block text-center transition-colors">
+          Buy it now
+        </a>
+      </div>
     </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-      {% assign selected_collection = collections[section.settings.collection] %}
-      {% if selected_collection != blank and selected_collection.products_count > 0 %}
-        {% for product in selected_collection.products limit: section.settings.products_to_show %}
-          {% render 'product-card', product: product %}
-        {% endfor %}
-      {% else %}
-        {% for i in (1..4) %}
-          <div class="rounded-2xl border border-slate-800 bg-slate-900/60 p-5 flex flex-col justify-between min-h-[320px]">
-            <div class="aspect-square bg-slate-800 rounded-xl mb-4 flex items-center justify-center text-slate-500 font-medium">
-              Product {{ i }} Image
-            </div>
-            <div>
-              <h3 class="font-bold text-slate-200">Relights Motion Controller Kit {{ i }}</h3>
-              <p class="text-amber-400 font-extrabold mt-2">$149.00</p>
-            </div>
-          </div>
-        {% endfor %}
-      {% endif %}
+    <!-- Product 2 -->
+    <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm hover:shadow-md transition-all flex flex-col justify-between group">
+      <div>
+        <div class="relative bg-slate-50 rounded-xl p-4 mb-4 flex items-center justify-center min-h-[180px]">
+          <span class="absolute top-3 left-3 bg-orange-500 text-white text-[10px] font-extrabold px-2.5 py-1 rounded-md uppercase">TRENDING NOW 100% OFF</span>
+          <img src="https://images.unsplash.com/photo-1507499739999-097706ad8914?auto=format&fit=crop&w=400&q=80" alt="3W Motion Sensor Wall Step Light" class="h-32 object-contain group-hover:scale-105 transition-transform">
+        </div>
+        <h3 class="font-bold text-sm text-slate-900 line-clamp-2">3W Motion Sensor Wall Step Light, LED Foot Light for Stairs</h3>
+        <div class="flex items-center gap-1 my-2 text-amber-500 text-xs font-bold">
+          <span>★ 4.8</span>
+          <span class="text-slate-400 font-normal">(138)</span>
+        </div>
+        <p class="text-xs text-slate-500 line-clamp-2 mb-3">IP65 Waterproof Aluminium Body Concealed Recess Wall Light (Indoor & Outdoor).</p>
+      </div>
+      <div>
+        <div class="flex items-baseline gap-2 mb-3">
+          <span class="text-lg font-black text-slate-900">Rs. 578.00</span>
+          <span class="text-xs text-slate-400 line-through">Rs. 6,800.00</span>
+        </div>
+        <a href="/collections/all" class="w-full bg-slate-950 hover:bg-blue-600 text-white text-xs font-bold py-2.5 rounded-xl block text-center transition-colors">
+          Buy it now
+        </a>
+      </div>
+    </div>
+
+    <!-- Product 3 -->
+    <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm hover:shadow-md transition-all flex flex-col justify-between group">
+      <div>
+        <div class="relative bg-slate-50 rounded-xl p-4 mb-4 flex items-center justify-center min-h-[180px]">
+          <span class="absolute top-3 left-3 bg-blue-600 text-white text-[10px] font-extrabold px-2.5 py-1 rounded-md uppercase">NEW GEN 3 - 3L DUAL LIGHT STRIP</span>
+          <img src="https://images.unsplash.com/photo-1550009158-9ebf69173e03?auto=format&fit=crop&w=400&q=80" alt="Relights Pro RGB-W Architectural Motion Controller" class="h-32 object-contain group-hover:scale-105 transition-transform">
+        </div>
+        <h3 class="font-bold text-sm text-slate-900 line-clamp-2">Relights Pro RGB-W Architectural Motion Controller</h3>
+        <div class="flex items-center gap-1 my-2 text-amber-500 text-xs font-bold">
+          <span>★ 4.9</span>
+          <span class="text-slate-400 font-normal">(79)</span>
+        </div>
+        <p class="text-xs text-slate-500 line-clamp-2 mb-3">Full spectrum RGB + Warm White cascading motion lighting controller.</p>
+      </div>
+      <div>
+        <div class="flex items-baseline gap-2 mb-3">
+          <span class="text-lg font-black text-slate-900">Rs. 6,499.00</span>
+          <span class="text-xs text-slate-400 line-through">Rs. 8,999.00</span>
+        </div>
+        <a href="/collections/all" class="w-full bg-slate-950 hover:bg-blue-600 text-white text-xs font-bold py-2.5 rounded-xl block text-center transition-colors">
+          Buy it now
+        </a>
+      </div>
+    </div>
+
+    <!-- Product 4 -->
+    <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm hover:shadow-md transition-all flex flex-col justify-between group">
+      <div>
+        <div class="relative bg-slate-50 rounded-xl p-4 mb-4 flex items-center justify-center min-h-[180px]">
+          <span class="absolute top-3 left-3 bg-purple-600 text-white text-[10px] font-extrabold px-2.5 py-1 rounded-md uppercase">POPULAR</span>
+          <img src="https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=400&q=80" alt="Premium COB LED Light Strip Reel (5 Meters)" class="h-32 object-contain group-hover:scale-105 transition-transform">
+        </div>
+        <h3 class="font-bold text-sm text-slate-900 line-clamp-2">Premium COB LED Light Strip Reel (5 Meters)</h3>
+        <div class="flex items-center gap-1 my-2 text-amber-500 text-xs font-bold">
+          <span>★ 4.9</span>
+          <span class="text-slate-400 font-normal">(112)</span>
+        </div>
+        <p class="text-xs text-slate-500 line-clamp-2 mb-3">Continuous dotless ultra-bright COB linear LED lighting.</p>
+      </div>
+      <div>
+        <div class="flex items-baseline gap-2 mb-3">
+          <span class="text-lg font-black text-slate-900">Rs. 1,299.00</span>
+          <span class="text-xs text-slate-400 line-through">Rs. 1,999.00</span>
+        </div>
+        <a href="/collections/all" class="w-full bg-slate-950 hover:bg-blue-600 text-white text-xs font-bold py-2.5 rounded-xl block text-center transition-colors">
+          Buy it now
+        </a>
+      </div>
     </div>
   </div>
 </section>
@@ -38,32 +112,6 @@
 {% schema %}
 {
   "name": "Featured Products",
-  "settings": [
-    {
-      "type": "text",
-      "id": "title",
-      "label": "Heading",
-      "default": "Smart Stair Controllers & LED Lights"
-    },
-    {
-      "type": "collection",
-      "id": "collection",
-      "label": "Collection"
-    },
-    {
-      "type": "range",
-      "id": "products_to_show",
-      "min": 2,
-      "max": 12,
-      "step": 2,
-      "default": 4,
-      "label": "Number of products to show"
-    }
-  ],
-  "presets": [
-    {
-      "name": "Featured Products"
-    }
-  ]
+  "settings": []
 }
 {% endschema %}

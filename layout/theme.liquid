@@ -4,19 +4,17 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="theme-color" content="#0d0f12">
+    <meta name="theme-color" content="#2563eb">
 
     <link rel="canonical" href="{{ canonical_url }}">
     <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     {%- if page_description -%}
       <meta name="description" content="{{ page_description | escape }}">
     {%- endif -%}
-
-    {% render 'meta-tags' %}
 
     <title>
       {{ page_title }}
@@ -27,6 +25,7 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
     {{ 'theme.css' | asset_url | stylesheet_tag }}
+    {{ 'app-bundle.css' | asset_url | stylesheet_tag }}
 
     {{ content_for_header }}
 
@@ -40,22 +39,19 @@
     </script>
   </head>
 
-  <body class="template-{{ template.name }} theme-relights bg-slate-950 text-slate-100 antialiased">
-    <a class="skip-to-content-link button visually-hidden" href="#MainContent">
-      Skip to content
-    </a>
+  <body class="template-{{ template.name }} theme-relights bg-white text-slate-800 antialiased">
+    <!-- React Interactive App Mounting Root -->
+    <div id="root">
+      {% section 'header' %}
 
-    {% section 'header' %}
+      <main id="MainContent" class="content-for-layout focus-none" tabindex="-1">
+        {{ content_for_layout }}
+      </main>
 
-    <main id="MainContent" class="content-for-layout focus-none" tabindex="-1">
-      {{ content_for_layout }}
-    </main>
+      {% section 'footer' %}
+    </div>
 
-    {% section 'footer' %}
-
-    {% render 'cart-drawer' %}
-
+    {{ 'app-bundle.js' | asset_url | script_tag }}
     {{ 'theme.js' | asset_url | script_tag }}
-    {{ 'interactive-staircase.js' | asset_url | script_tag }}
   </body>
 </html>
