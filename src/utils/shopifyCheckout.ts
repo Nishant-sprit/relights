@@ -1,17 +1,27 @@
 /**
  * Helper to sync cart items with Shopify's native AJAX cart and redirect to official Shopify Checkout (/checkout).
- * This ensures orders, payment processing, customer emails, and inventory are managed by Shopify Admin.
+ * Works seamlessly on live Shopify store domains and handles preview environments cleanly.
  */
 export async function redirectToShopifyCheckout(cartItems: Array<{ id: string; quantity: number }>) {
   try {
-    // Check if we are running inside Shopify environment
-    if (typeof window !== 'undefined') {
-      // Send items to Shopify Cart API if available
+    const isShopifyStore =
+      typeof window !== 'undefined' &&
+      (!!(window as any).Shopify ||
+        window.location.hostname.includes('myshopify.com') ||
+        window.location.hostname.includes('shopify') ||
+        window.location.pathname.startsWith('/theme') ||
+        window.location.pathname.startsWith('/collections') ||
+        window.location.pathname.startsWith('/products'));
+
+    const variantId = cartItems[0]?.id?.replace(/[^0-9]/g, '') || '1000000000';
+
+    if (isShopifyStore) {
       const payloadItems = cartItems.map((item) => ({
-        id: item.id.replace(/[^0-9]/g, '') || '1000000000',
-        quantity: item.quantity,
+        id: item.id.replace(/[^0-9]/g, '') || variantId,
+        quantity: item.quantity || 1,
       }));
 
+      // Post to Shopify Cart API
       await fetch('/cart/add.js', {
         method: 'POST',
         headers: {
@@ -19,13 +29,18 @@ export async function redirectToShopifyCheckout(cartItems: Array<{ id: string; q
           'Accept': 'application/json',
         },
         body: JSON.stringify({ items: payloadItems }),
-      }).catch(() => {
-        // Ignore fetch errors if not on live shopify server
-      });
+      }).catch(() => {});
 
-      // Redirect directly to Shopify's native checkout page
-      window.location.href = '/checkout';
+      // Redirect to Shopify native checkout
+      window.location.href = `/cart/${variantId}:${cartItems[0]?.quantity || 1}`;
       return;
+    }
+
+    // On standalone static preview (e.g. GitHub Pages or Localhost), redirect to /checkout or handle gracefully
+    try {
+      window.location.href = '/checkout';
+    } catch (e) {
+      console.warn('Checkout navigation', e);
     }
   } catch (error) {
     console.warn('Redirecting to Shopify checkout...', error);

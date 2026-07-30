@@ -77,15 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       const variantId = target.getAttribute('data-variant-id');
       if (variantId) {
-        fetch('/cart/add.js', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ items: [{ id: variantId, quantity: 1 }] })
-        }).then(() => {
-          window.location.href = '/checkout';
-        }).catch(() => {
-          window.location.href = '/checkout';
-        });
+        window.location.href = `/cart/${variantId}:1`;
       } else {
         window.location.href = '/checkout';
       }
