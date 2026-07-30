@@ -234,10 +234,16 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
             </div>
 
             <button
-              onClick={() => onProceedToCheckout(discountAmount, couponCode)}
+              onClick={() => {
+                if (window.location.hostname.includes('myshopify.com') || window.location.pathname.includes('/checkout')) {
+                  window.location.href = '/checkout';
+                  return;
+                }
+                onProceedToCheckout(discountAmount, couponCode);
+              }}
               className="w-full bg-blue-600 hover:bg-blue-700 text-white font-extrabold py-3.5 rounded-xl shadow-lg shadow-blue-500/20 flex items-center justify-center gap-2 transition-all cursor-pointer"
             >
-              Proceed to Checkout
+              Proceed to Shopify Checkout
               <ArrowRight className="w-4 h-4" />
             </button>
 

@@ -1,4 +1,4 @@
-// Relights Theme JS - Cart Drawer & Ajax Handlers
+// Relights Theme JS - Cart Drawer, Buy Now Direct & Shopify Ajax Handlers
 document.addEventListener('DOMContentLoaded', () => {
   const openCartBtn = document.getElementById('OpenCartDrawerBtn');
   const closeCartBtn = document.getElementById('CloseCartDrawer');
@@ -36,6 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const formData = new FormData(form);
+      const isBuyNow = e.submitter && e.submitter.getAttribute('data-buy-now') === 'true';
 
       try {
         const res = await fetch('/cart/add.js', {
@@ -44,6 +45,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         if (res.ok) {
+          if (isBuyNow) {
+            window.location.href = '/checkout';
+            return;
+          }
+
           // Fetch updated cart JSON
           const cartRes = await fetch('/cart.js');
           const cartData = await cartRes.json();
@@ -54,10 +60,35 @@ document.addEventListener('DOMContentLoaded', () => {
           });
 
           toggleCartDrawer(true);
+        } else {
+          if (isBuyNow) window.location.href = '/checkout';
         }
       } catch (err) {
         console.error('Failed to add item to cart', err);
+        if (isBuyNow) window.location.href = '/checkout';
       }
     });
+  });
+
+  // Handle all "Buy Now" links/buttons across theme
+  document.addEventListener('click', (e) => {
+    const target = e.target.closest('[data-action="buy-now"]');
+    if (target) {
+      e.preventDefault();
+      const variantId = target.getAttribute('data-variant-id');
+      if (variantId) {
+        fetch('/cart/add.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ items: [{ id: variantId, quantity: 1 }] })
+        }).then(() => {
+          window.location.href = '/checkout';
+        }).catch(() => {
+          window.location.href = '/checkout';
+        });
+      } else {
+        window.location.href = '/checkout';
+      }
+    }
   });
 });

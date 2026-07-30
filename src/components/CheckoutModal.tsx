@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { X, CheckCircle2, ShieldCheck, CreditCard, Lock, ArrowLeft, Download, Sparkles } from 'lucide-react';
+import { X, CheckCircle2, ShieldCheck, CreditCard, Lock, Download, Sparkles, ExternalLink, ShoppingCart } from 'lucide-react';
 import { CartItem, OrderDetails } from '../types';
 import { formatINR } from '../utils/formatCurrency';
+import { redirectToShopifyCheckout } from '../utils/shopifyCheckout';
 
 interface CheckoutModalProps {
   isOpen: boolean;
@@ -44,8 +45,19 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
   const shippingFee = 0;
   const total = Math.max(0, subtotal - discountAmount + shippingFee);
 
+  const handleShopifyCheckoutRedirect = () => {
+    redirectToShopifyCheckout(cartItems);
+  };
+
   const handleSubmitOrder = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // If on shopify domain, redirect to shopify checkout directly
+    if (window.location.hostname.includes('myshopify.com') || window.location.pathname.includes('/checkout')) {
+      handleShopifyCheckoutRedirect();
+      return;
+    }
+
     const orderId = 'RL-' + Math.floor(100000 + Math.random() * 900000);
     const order: OrderDetails = {
       orderId,
@@ -78,14 +90,35 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
 
         {step === 'form' ? (
           <div>
-            <div className="flex items-center gap-2 mb-6 border-b border-slate-100 pb-4">
-              <div className="w-9 h-9 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold shadow-md shadow-blue-500/20">
-                <Lock className="w-4 h-4" />
+            <div className="flex items-center justify-between mb-4 border-b border-slate-100 pb-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold shadow-md shadow-blue-500/20">
+                  <Lock className="w-5 h-5" />
+                </div>
+                <div>
+                  <h2 className="text-xl font-extrabold text-slate-900">Relights Checkout</h2>
+                  <p className="text-xs text-slate-500">Fast 256-bit encrypted checkout</p>
+                </div>
               </div>
-              <div>
-                <h2 className="text-xl font-extrabold text-slate-900">Relights Express Checkout</h2>
-                <p className="text-xs text-slate-500">Fast 256-bit encrypted checkout</p>
+            </div>
+
+            {/* Prominent Direct Shopify Checkout Button */}
+            <div className="mb-6 p-4 rounded-2xl bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 flex flex-col sm:flex-row items-center justify-between gap-3">
+              <div className="text-left space-y-0.5">
+                <p className="text-xs font-bold text-blue-900 flex items-center gap-1.5">
+                  <ShoppingCart className="w-4 h-4 text-blue-600" /> Complete Purchase on Shopify
+                </p>
+                <p className="text-[11px] text-blue-700">
+                  Redirect directly to official Shopify checkout to receive email confirmations & tracking.
+                </p>
               </div>
+              <button
+                type="button"
+                onClick={handleShopifyCheckoutRedirect}
+                className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white text-xs font-extrabold px-5 py-3 rounded-xl shadow-md shadow-blue-500/20 whitespace-nowrap flex items-center justify-center gap-1.5 transition-all"
+              >
+                Go to Shopify Checkout <ExternalLink className="w-3.5 h-3.5" />
+              </button>
             </div>
 
             <form onSubmit={handleSubmitOrder} className="space-y-6">
@@ -225,13 +258,23 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                 </div>
               </div>
 
-              <button
-                type="submit"
-                className="w-full bg-slate-900 hover:bg-slate-800 text-white font-extrabold py-4 rounded-2xl shadow-xl text-sm transition-all cursor-pointer flex items-center justify-center gap-2"
-              >
-                <Lock className="w-4 h-4" />
-                Complete Purchase &bull; {formatINR(total)}
-              </button>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <button
+                  type="button"
+                  onClick={handleShopifyCheckoutRedirect}
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-extrabold py-4 rounded-2xl shadow-xl text-xs transition-all cursor-pointer flex items-center justify-center gap-2"
+                >
+                  <ShoppingCart className="w-4 h-4" />
+                  Proceed to Shopify Checkout
+                </button>
+                <button
+                  type="submit"
+                  className="bg-slate-900 hover:bg-slate-800 text-white font-extrabold py-4 rounded-2xl shadow-xl text-xs transition-all cursor-pointer flex items-center justify-center gap-2"
+                >
+                  <Lock className="w-4 h-4" />
+                  Complete Instant Order &bull; {formatINR(total)}
+                </button>
+              </div>
             </form>
           </div>
         ) : (
@@ -249,7 +292,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                 Thank You for Your Relights Order!
               </h2>
               <p className="text-xs text-slate-600 mt-1">
-                Your order reference is <strong className="text-slate-900 font-mono">{completedOrder?.orderId}</strong>. A confirmation email with tracking has been sent to {completedOrder?.email}.
+                Your order reference is <strong className="text-slate-900 font-mono">{completedOrder?.orderId}</strong>. A confirmation email with tracking details has been generated for {completedOrder?.email}.
               </p>
             </div>
 
