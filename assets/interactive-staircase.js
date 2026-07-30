@@ -1,77 +1,133 @@
-// Interactive Staircase Simulator Script
-document.addEventListener('DOMContentLoaded', () => {
-  const preview = document.getElementById('staircasePreview');
-  const countInput = document.getElementById('stairCountInput');
-  const countVal = document.getElementById('stairCountVal');
-  const triggerBtn = document.getElementById('triggerMotionBtn');
-  const colorBtns = document.querySelectorAll('.stair-color-btn');
-
-  let activeColor = '#f59e0b';
-  let stepCount = parseInt(countInput ? countInput.value : '10');
-
-  function renderSteps() {
-    if (!preview) return;
-    preview.innerHTML = '';
-
-    for (let i = 0; i < stepCount; i++) {
-      const step = document.createElement('div');
-      step.className = 'w-full h-8 rounded-lg border border-slate-800 bg-slate-900 flex items-center justify-between px-4 transition-all duration-300 stair-step-item';
-      step.dataset.stepIndex = i;
-      step.style.width = `${100 - i * 3}%`;
-
-      step.innerHTML = `
-        <span class="text-xs font-semibold text-slate-500">Step #${i + 1}</span>
-        <div class="step-led w-3 h-3 rounded-full bg-slate-800 transition-all duration-300"></div>
-      `;
-
-      preview.appendChild(step);
-    }
+/**
+ * LuminaStep Interactive Staircase Simulation Component
+ */
+class InteractiveStaircaseElement extends HTMLElement {
+  constructor() {
+    super();
+    this.totalSteps = 12;
+    this.litSteps = new Set();
+    this.isSimulating = false;
+    this.lightColor = 'blue';
+    this.cascadeSpeed = 150;
   }
 
-  function runMotionSequence() {
-    const steps = preview.querySelectorAll('.stair-step-item');
-    steps.forEach((step, idx) => {
-      setTimeout(() => {
-        const led = step.querySelector('.step-led');
-        step.style.borderColor = activeColor;
-        step.style.boxShadow = `0 0 15px ${activeColor}80`;
-        if (led) {
-          led.style.backgroundColor = activeColor;
-          led.style.boxShadow = `0 0 10px ${activeColor}`;
+  connectedCallback() {
+    this.render();
+    this.setupEventListeners();
+  }
+
+  setupEventListeners() {
+    const btnUp = this.querySelector('#btn-walk-up');
+    const btnDown = this.querySelector('#btn-walk-down');
+    const btnReset = this.querySelector('#btn-reset');
+    const colorButtons = this.querySelectorAll('.color-picker-btn');
+
+    if (btnUp) btnUp.addEventListener('click', () => this.triggerWalk('up'));
+    if (btnDown) btnDown.addEventListener('click', () => this.triggerWalk('down'));
+    if (btnReset) btnReset.addEventListener('click', () => this.resetAll());
+
+    colorButtons.forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        const color = e.currentTarget.getAttribute('data-color');
+        if (color) {
+          this.lightColor = color;
+          this.updateColorStyles();
         }
+      });
+    });
 
+    const stepElements = this.querySelectorAll('.stair-step-item');
+    stepElements.forEach((el) => {
+      el.addEventListener('click', (e) => {
+        const stepIdx = parseInt(e.currentTarget.getAttribute('data-step-index'), 10);
+        this.toggleStep(stepIdx);
+      });
+    });
+  }
+
+  triggerWalk(dir) {
+    if (this.isSimulating) return;
+    this.isSimulating = true;
+    this.litSteps.clear();
+    this.updateStepDisplay();
+
+    const order = dir === 'up'
+      ? Array.from({ length: this.totalSteps }, (_, i) => i)
+      : Array.from({ length: this.totalSteps }, (_, i) => this.totalSteps - 1 - i);
+
+    order.forEach((stepIdx, i) => {
+      setTimeout(() => {
+        this.litSteps.add(stepIdx);
+        this.updateStepDisplay();
+      }, i * this.cascadeSpeed);
+    });
+
+    const totalDuration = order.length * this.cascadeSpeed + 2500;
+
+    setTimeout(() => {
+      order.forEach((stepIdx, i) => {
         setTimeout(() => {
-          step.style.borderColor = '';
-          step.style.boxShadow = '';
-          if (led) {
-            led.style.backgroundColor = '';
-            led.style.boxShadow = '';
-          }
-        }, 1800);
-      }, idx * 180);
+          this.litSteps.delete(stepIdx);
+          this.updateStepDisplay();
+        }, i * (this.cascadeSpeed * 0.8));
+      });
+
+      setTimeout(() => {
+        this.isSimulating = false;
+      }, order.length * (this.cascadeSpeed * 0.8) + 300);
+    }, totalDuration);
+  }
+
+  toggleStep(stepIdx) {
+    if (this.litSteps.has(stepIdx)) {
+      this.litSteps.delete(stepIdx);
+    } else {
+      this.litSteps.add(stepIdx);
+    }
+    this.updateStepDisplay();
+  }
+
+  resetAll() {
+    this.litSteps.clear();
+    this.isSimulating = false;
+    this.updateStepDisplay();
+  }
+
+  updateStepDisplay() {
+    const steps = this.querySelectorAll('.stair-step-item');
+    steps.forEach((el, idx) => {
+      const ledBar = el.querySelector('.led-light-bar');
+      if (this.litSteps.has(idx)) {
+        el.classList.add('step-lit');
+        if (ledBar) ledBar.style.opacity = '1';
+      } else {
+        el.classList.remove('step-lit');
+        if (ledBar) ledBar.style.opacity = '0.15';
+      }
     });
   }
 
-  if (countInput) {
-    countInput.addEventListener('input', (e) => {
-      stepCount = parseInt(e.target.value);
-      if (countVal) countVal.textContent = `${stepCount} Steps`;
-      renderSteps();
+  updateColorStyles() {
+    const colorClasses = {
+      blue: 'from-blue-500 to-cyan-400 shadow-blue-500/50',
+      warm: 'from-amber-400 to-yellow-500 shadow-amber-400/50',
+      cool: 'from-sky-200 to-blue-300 shadow-sky-200/50',
+      rgb: 'from-indigo-500 via-purple-500 to-pink-500 shadow-purple-500/50'
+    };
+
+    const activeBg = colorClasses[this.lightColor] || colorClasses.blue;
+    const ledBars = this.querySelectorAll('.led-light-bar');
+    
+    ledBars.forEach((bar) => {
+      bar.className = `led-light-bar absolute bottom-0 left-0 right-0 h-2 rounded-full transition-all duration-300 bg-gradient-to-r shadow-lg ${activeBg}`;
     });
   }
 
-  colorBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      activeColor = btn.dataset.color || '#f59e0b';
-      colorBtns.forEach(b => b.classList.remove('ring-2', 'ring-amber-500'));
-      btn.classList.add('ring-2', 'ring-amber-500');
-      runMotionSequence();
-    });
-  });
-
-  if (triggerBtn) {
-    triggerBtn.addEventListener('click', runMotionSequence);
+  render() {
+    // Structural DOM is defined in liquid section template for max SEO and editability
   }
+}
 
-  renderSteps();
-});
+if (!customElements.get('interactive-staircase')) {
+  customElements.define('interactive-staircase', InteractiveStaircaseElement);
+}

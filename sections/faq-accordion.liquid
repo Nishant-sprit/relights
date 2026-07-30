@@ -1,0 +1,60 @@
+<section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+  <div class="text-center max-w-2xl mx-auto mb-12 space-y-2">
+    <span class="text-xs font-bold uppercase tracking-[0.2em] text-blue-500">Got Questions?</span>
+    <h2 class="text-3xl font-extrabold text-gray-900">Frequently Asked Questions</h2>
+  </div>
+
+  <div class="space-y-4">
+    <details class="group bg-white border border-gray-200 rounded-2xl p-6 [&_summary::-webkit-details-marker]:none">
+      <summary class="flex items-center justify-between cursor-pointer text-sm font-bold text-gray-900">
+        <span>How many steps does the controller support?</span>
+        <span class="text-blue-600 font-bold group-open:rotate-180 transition-transform">↓</span>
+      </summary>
+      <p class="mt-4 text-xs sm:text-sm text-gray-600 leading-relaxed">
+        The Auslese Robotics LED-2052-V2 supports anywhere from 1 to 32 steps. You can set your exact step count via the on-board 5-button digital setting interface.
+      </p>
+    </details>
+
+    <details class="group bg-white border border-gray-200 rounded-2xl p-6 [&_summary::-webkit-details-marker]:none">
+      <summary class="flex items-center justify-between cursor-pointer text-sm font-bold text-gray-900">
+        <span>Do the lights turn on during daytime?</span>
+        <span class="text-blue-600 font-bold group-open:rotate-180 transition-transform">↓</span>
+      </summary>
+      <p class="mt-4 text-xs sm:text-sm text-gray-600 leading-relaxed">
+        No! Every kit includes an intelligent ambient daylight photocell sensor probe that disables motion triggers when room ambient light is bright, saving up to 85% energy.
+      </p>
+    </details>
+
+    <details class="group bg-white border border-gray-200 rounded-2xl p-6 [&_summary::-webkit-details-marker]:none">
+      <summary class="flex items-center justify-between cursor-pointer text-sm font-bold text-gray-900">
+        <span>What operating voltage does this controller require?</span>
+        <span class="text-blue-600 font-bold group-open:rotate-180 transition-transform">↓</span>
+      </summary>
+      <p class="mt-4 text-xs sm:text-sm text-gray-600 leading-relaxed">
+        The controller operates on constant voltage DC 12V or 24V power supplies with total load support up to 500W (3A per channel).
+      </p>
+    </details>
+
+    <details class="group bg-white border border-gray-200 rounded-2xl p-6 [&_summary::-webkit-details-marker]:none">
+      <summary class="flex items-center justify-between cursor-pointer text-sm font-bold text-gray-900">
+        <span>Can I adjust the cascading speed and stay-on delay?</span>
+        <span class="text-blue-600 font-bold group-open:rotate-180 transition-transform">↓</span>
+      </summary>
+      <p class="mt-4 text-xs sm:text-sm text-gray-600 leading-relaxed">
+        Yes! On-board setting keys allow you to pick from 9 speed levels and customize stay-on delays from 10 to 180 seconds.
+      </p>
+    </details>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "FAQ Accordion",
+  "settings": [],
+  "presets": [
+    {
+      "name": "FAQ Accordion"
+    }
+  ]
+}
+{% endschema %}

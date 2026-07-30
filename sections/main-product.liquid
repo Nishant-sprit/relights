@@ -1,0 +1,865 @@
+<!-- Breadcrumbs -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-2 text-xs text-gray-500 flex items-center gap-2">
+  <a href="{{ routes.root_url }}" class="hover:text-black">Home</a>
+  <span>&gt;</span>
+  <a href="{{ routes.collections_url }}" class="hover:text-black">Smart Motion Lighting</a>
+  <span>&gt;</span>
+  <span class="text-gray-900 font-semibold">{{ product.title }}</span>
+</div>
+
+<section id="ProductPageContainer" class="py-6 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto" data-product-handle="{{ product.handle }}">
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+    
+    <!-- Left Column: Gallery & LED Simulator Box (5 cols) -->
+    <div class="lg:col-span-5 space-y-5">
+      
+      <!-- Featured Image -->
+      <div class="aspect-square bg-gray-50 rounded-3xl overflow-hidden border border-gray-100 shadow-sm relative">
+        {%- if product.tags contains 'Bestseller' or product.tags contains 'Best Seller' -%}
+          <span class="absolute top-4 left-4 bg-blue-600 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider z-10 shadow">
+            ★ BEST SELLER
+          </span>
+        {%- endif -%}
+        <span class="absolute top-11 left-4 bg-gray-900 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider z-10 shadow">
+          500W HEAVY-DUTY LOAD
+        </span>
+        {%- if product.featured_image != blank -%}
+          <img id="MainProductImage" src="{{ product.featured_image | image_url: width: 1200 }}" alt="{{ product.title | escape }}" width="1200" height="1200" class="w-full h-full object-cover">
+        {%- else -%}
+          <img id="MainProductImage" src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=1200" alt="{{ product.title | escape }}" width="1200" height="1200" class="w-full h-full object-cover">
+        {%- endif -%}
+      </div>
+
+      <!-- Thumbnail Gallery Carousel -->
+      <div class="grid grid-cols-4 gap-3">
+        {%- if product.images.size > 0 -%}
+          {%- for image in product.images limit: 4 -%}
+            <button type="button" onclick="document.getElementById('MainProductImage').src='{{ image | image_url: width: 1200 }}'" class="aspect-square rounded-2xl overflow-hidden border {% if forloop.first %}border-2 border-blue-600{% else %}border-gray-200{% endif %} focus:outline-none cursor-pointer">
+              <img src="{{ image | image_url: width: 300 }}" alt="{{ image.alt | default: product.title | escape }}" width="300" height="300" class="w-full h-full object-cover">
+            </button>
+          {%- endfor -%}
+        {%- else -%}
+          <button type="button" onclick="document.getElementById('MainProductImage').src='https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=1200'" class="aspect-square rounded-2xl overflow-hidden border-2 border-blue-600 focus:outline-none cursor-pointer">
+            <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=300" alt="Stair lighting" width="300" height="300" class="w-full h-full object-cover">
+          </button>
+          <button type="button" onclick="document.getElementById('MainProductImage').src='https://images.unsplash.com/photo-1541123437800-1bb1317badc2?auto=format&fit=crop&q=80&w=1200'" class="aspect-square rounded-2xl overflow-hidden border border-gray-200 focus:outline-none cursor-pointer">
+            <img src="https://images.unsplash.com/photo-1541123437800-1bb1317badc2?auto=format&fit=crop&q=80&w=300" alt="Dual sensors" width="300" height="300" class="w-full h-full object-cover">
+          </button>
+          <button type="button" onclick="document.getElementById('MainProductImage').src='https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=1200'" class="aspect-square rounded-2xl overflow-hidden border border-gray-200 focus:outline-none cursor-pointer">
+            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=300" alt="Interior stairs" width="300" height="300" class="w-full h-full object-cover">
+          </button>
+          <button type="button" onclick="document.getElementById('MainProductImage').src='https://images.unsplash.com/photo-1507652313519-d4e9174996dd?auto=format&fit=crop&q=80&w=1200'" class="aspect-square rounded-2xl overflow-hidden border border-gray-200 focus:outline-none cursor-pointer">
+            <img src="https://images.unsplash.com/photo-1507652313519-d4e9174996dd?auto=format&fit=crop&q=80&w=300" alt="Smart panel" width="300" height="300" class="w-full h-full object-cover">
+          </button>
+        {%- endif -%}
+      </div>
+
+      <!-- Live Simulator Box -->
+      <div class="bg-gray-950 text-white rounded-3xl p-6 border border-gray-800 space-y-4 shadow-xl">
+        <div class="flex justify-between items-center text-xs">
+          <span class="font-black text-blue-400 uppercase tracking-widest flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+            FASTER CONTROLLER LED SIMULATOR
+          </span>
+          <span class="text-xs bg-green-500/20 text-green-400 font-mono px-2 py-0.5 rounded border border-green-500/30">
+            {{ product.variants.first.sku | default: 'LED-2052-V2' }} LIVE
+          </span>
+        </div>
+        <p class="text-[11px] text-gray-400">Test motion triggers for <strong id="SimulatorActiveStepsCount" class="text-white">32 Stair Steps</strong> in real-time:</p>
+
+        <div class="bg-gray-900 p-4 rounded-2xl border border-gray-800">
+          <div id="SimulatorStepsGrid" class="grid grid-cols-8 gap-1.5">
+            {%- for i in (1..32) -%}
+              <div id="sim-step-{{ forloop.index0 }}" class="sim-step-box h-6 rounded bg-gray-800 text-[8px] font-mono flex items-center justify-center text-gray-500 transition-all duration-150">
+                {{ i }}
+              </div>
+            {%- endfor -%}
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2 pt-1">
+          <button type="button" id="btn-trigger-bottom" class="py-2.5 px-3 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs rounded-xl shadow transition-all text-center cursor-pointer">
+            ► Trigger Bottom PIR
+          </button>
+          <button type="button" id="btn-trigger-top" class="py-2.5 px-3 bg-gray-800 hover:bg-gray-700 text-white font-bold text-xs rounded-xl shadow transition-all text-center cursor-pointer">
+            ► Trigger Top PIR
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Center Column: Specs & Configurator Options (4 cols) -->
+    <div class="lg:col-span-4 space-y-5">
+      
+      <div>
+        <div class="flex items-center gap-2 text-[11px] text-blue-600 font-bold uppercase tracking-wider mb-1">
+          <span>{{ product.vendor | default: 'Auslese Robotics Series' }}</span>
+          <span>•</span>
+          <span class="text-gray-500 font-normal">{{ product.variants.first.sku | default: 'LED-2052-V2' }}</span>
+        </div>
+
+        <h1 class="text-xl sm:text-2xl font-black text-gray-900 leading-tight">
+          {{ product.title }}
+        </h1>
+
+        <div class="flex items-center gap-3 text-xs mt-2.5">
+          <div class="flex items-center text-amber-400 font-bold">
+            <span>★★★★★</span>
+            <span class="text-gray-900 ml-1 font-extrabold">4.8</span>
+            <span class="text-blue-600 ml-1 hover:underline cursor-pointer">(342 customer reviews)</span>
+          </div>
+          <span class="text-gray-300">•</span>
+          <span class="text-green-600 font-bold">{% if product.available %}In Stock{% else %}Out of Stock{% endif %}</span>
+        </div>
+      </div>
+
+      <hr class="border-gray-200">
+
+      <!-- Dynamic Pricing Box -->
+      <div class="space-y-1">
+        <div class="flex items-baseline gap-2">
+          <span id="DisplayUnitPrice" class="text-3xl font-black text-gray-900 font-mono tracking-tight">
+            ₹{{ product.selected_or_first_available_variant.price | money_without_currency }}
+          </span>
+          {%- if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price -%}
+            <span id="DisplayOriginalPrice" class="text-xs text-gray-400 line-through font-mono">
+              ₹{{ product.selected_or_first_available_variant.compare_at_price | money_without_currency }}
+            </span>
+            <span class="bg-red-100 text-red-700 text-[10px] font-black px-2 py-0.5 rounded-full uppercase">
+              SAVE 25%
+            </span>
+          {%- endif -%}
+        </div>
+        <p class="text-[11px] text-gray-500">Tax included. Free express delivery worldwide.</p>
+      </div>
+
+      <!-- Instant Coupon Banner -->
+      <div class="p-3.5 rounded-2xl bg-amber-50 border border-amber-200 flex items-center gap-3">
+        <input type="checkbox" id="coupon-check" class="w-4 h-4 rounded text-blue-600 focus:ring-blue-500 cursor-pointer">
+        <label for="coupon-check" class="text-xs text-amber-950 font-semibold cursor-pointer flex-1">
+          <span class="bg-amber-400 text-black px-1.5 py-0.5 rounded text-[10px] font-bold uppercase mr-1">COUPON</span>
+          Apply 2% Instant Checkout Discount
+        </label>
+      </div>
+
+      <!-- Option 1: Package Type -->
+      <div class="space-y-2">
+        <label class="text-xs font-bold text-gray-900 block">1. Select Package Type:</label>
+        <div class="grid grid-cols-2 gap-2 text-xs">
+          <button type="button" id="pkg-board" class="pkg-type-btn p-3 rounded-2xl border border-gray-200 text-left transition-all hover:border-gray-300 cursor-pointer">
+            <span class="block font-extrabold text-xs text-gray-900">Controller Board</span>
+            <span id="pkg-board-subtext" class="text-[10px] text-gray-500">₹2,079 • Board + 2x PIR</span>
+          </button>
+          <button type="button" id="pkg-kit" class="pkg-type-btn p-3 rounded-2xl border-2 border-blue-600 bg-blue-50/60 text-blue-900 font-bold text-left transition-all shadow-sm cursor-pointer">
+            <span class="block font-extrabold text-xs">Complete Step Kit</span>
+            <span id="pkg-kit-subtext" class="text-[10px] text-gray-500 font-normal">₹12,479 • includes COB LED</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Option 2: Configure Steps -->
+      <div class="space-y-2">
+        <div class="flex justify-between items-center text-xs">
+          <span class="font-bold text-gray-900">2. Configure Steps (1 to 32):</span>
+          <span id="ConfigStepsLabel" class="text-blue-600 font-mono font-bold">32 Steps</span>
+        </div>
+        <div class="grid grid-cols-4 gap-1.5 text-xs font-mono">
+          <button type="button" class="step-btn py-1.5 px-1 rounded-xl border border-gray-200 text-center text-gray-600 cursor-pointer" data-steps="8">8 Steps</button>
+          <button type="button" class="step-btn py-1.5 px-1 rounded-xl border border-gray-200 text-center text-gray-600 cursor-pointer" data-steps="12">12 Steps</button>
+          <button type="button" class="step-btn py-1.5 px-1 rounded-xl border border-gray-200 text-center text-gray-600 cursor-pointer" data-steps="16">16 Steps</button>
+          <button type="button" class="step-btn py-1.5 px-1 rounded-xl border border-gray-200 text-center text-gray-600 cursor-pointer" data-steps="20">20 Steps</button>
+          <button type="button" class="step-btn py-1.5 px-1 rounded-xl border border-gray-200 text-center text-gray-600 cursor-pointer" data-steps="24">24 Steps</button>
+          <button type="button" class="step-btn py-1.5 px-1 rounded-xl border border-gray-200 text-center text-gray-600 cursor-pointer" data-steps="28">28 Steps</button>
+          <button type="button" class="step-btn active-step py-1.5 px-1 rounded-xl border bg-gray-900 border-gray-900 text-white font-bold text-center cursor-pointer" data-steps="32">32 Steps</button>
+        </div>
+      </div>
+
+      <!-- Option 3: Operating Voltage -->
+      <div class="space-y-2">
+        <span class="text-xs font-bold text-gray-900 block">3. Operating Voltage:</span>
+        <div class="grid grid-cols-2 gap-2 text-xs">
+          <button type="button" class="voltage-btn py-2 px-3 rounded-xl border border-gray-200 text-center text-gray-600 cursor-pointer" data-volt="12V">12V DC Constant Voltage</button>
+          <button type="button" class="voltage-btn active-volt py-2 px-3 rounded-xl border-2 border-blue-600 bg-blue-600 text-white font-bold text-center shadow-sm cursor-pointer" data-volt="24V">24V DC Constant Voltage</button>
+        </div>
+      </div>
+
+      <!-- Option 4: LED Light Warmth -->
+      <div class="space-y-2">
+        <span class="text-xs font-bold text-gray-900 block">4. LED Light Warmth:</span>
+        <div class="grid grid-cols-3 gap-2 text-xs">
+          <button type="button" class="warmth-btn active-warmth py-2 px-2 rounded-xl border bg-gray-900 border-gray-900 text-white font-bold text-center cursor-pointer" data-warmth="Warm White">Warm White</button>
+          <button type="button" class="warmth-btn py-2 px-2 rounded-xl border border-gray-200 text-center text-gray-600 cursor-pointer" data-warmth="Neutral">Neutral</button>
+          <button type="button" class="warmth-btn py-2 px-2 rounded-xl border border-gray-200 text-center text-gray-600 cursor-pointer" data-warmth="Cool White">Cool White</button>
+        </div>
+      </div>
+
+      <!-- Specs Table -->
+      <div class="bg-gray-50 p-4 rounded-2xl border border-gray-200/80 space-y-2 text-xs">
+        <div class="flex justify-between border-b border-gray-200 pb-1.5">
+          <span class="text-gray-500">Maximum Power Capacity</span>
+          <span class="font-bold text-gray-900">500W (3A per step)</span>
+        </div>
+        <div class="flex justify-between border-b border-gray-200 pb-1.5">
+          <span class="text-gray-500">Short Circuit Prevention</span>
+          <span class="font-bold text-green-600">✓ Shortcutproof Hardware</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-gray-500">Sensors Included</span>
+          <span class="font-bold text-gray-900">2x PIR Motion Probes</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Right Column: Sticky Purchasing Box (3 cols) -->
+    <div class="lg:col-span-3 bg-white p-6 rounded-3xl border border-gray-200 shadow-xl space-y-5 sticky top-28">
+      <div>
+        <span id="StickyCalculatedPrice" class="text-3xl font-black text-gray-900 font-mono">
+          {{ product.selected_or_first_available_variant.price | money }}
+        </span>
+        <p class="text-xs text-blue-600 font-semibold mt-1">🚚 Free Express Shipping</p>
+        <p class="text-[11px] text-gray-400">Estimated Delivery: <strong>2 to 4 Business Days</strong></p>
+        <p class="text-xs text-green-600 font-bold mt-2 flex items-center gap-1">
+          ✓ In Stock & Ready to Ship
+        </p>
+      </div>
+
+      {% form 'product', product, class: 'space-y-4' %}
+        <input type="hidden" id="SelectedVariantId" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+        
+        <!-- Interactive Quantity Controller (+ / -) -->
+        <div class="space-y-1">
+          <label class="text-xs font-bold text-gray-700">Quantity:</label>
+          <div class="w-full flex items-center border border-gray-200 rounded-xl px-3 py-2 justify-between bg-white">
+            <button type="button" id="qty-minus" class="w-8 h-8 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold text-base flex items-center justify-center transition-colors cursor-pointer">-</button>
+            <input type="number" id="ProductQtyInput" name="quantity" value="1" min="1" readonly class="w-12 text-center font-black text-gray-900 text-base focus:outline-none bg-transparent font-mono">
+            <button type="button" id="qty-plus" class="w-8 h-8 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold text-base flex items-center justify-center transition-colors cursor-pointer">+</button>
+          </div>
+        </div>
+
+        <!-- Protection Plan Checkbox -->
+        <div class="p-3 bg-gray-50 rounded-xl border border-gray-200/60 flex items-center gap-2">
+          <input type="checkbox" id="plan-check" class="w-4 h-4 rounded text-blue-600 cursor-pointer">
+          <label for="plan-check" class="text-[11px] text-gray-700 font-medium cursor-pointer">
+            Add 1-Year Hardware Protection Plan (<span id="ProtectionCostText">+₹830</span>)
+          </label>
+        </div>
+
+        <button type="submit" id="AddToCartBtn" class="w-full py-3.5 bg-[#111111] hover:bg-black text-white font-bold text-xs rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer">
+          <span id="AddToCartBtnText">Add to Cart</span>
+        </button>
+
+        <button type="button" id="ExpressBuyNowBtn" class="w-full py-3.5 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs rounded-xl block text-center shadow-lg shadow-blue-500/25 transition-all cursor-pointer">
+          Express Buy Now &rarr;
+        </button>
+      {% endform %}
+
+      <div class="space-y-2 pt-2 border-t border-gray-100 text-[11px] text-gray-500">
+        <p class="flex items-center gap-1.5">🔒 256-Bit Encrypted Checkout</p>
+        <p class="flex items-center gap-1.5">🛡️ 2-Year Manufacturer Warranty</p>
+        <p class="flex items-center gap-1.5">↺ 30-Day Money-Back Guarantee</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Interactive 5-Tabs Navigation Bar (Matching Screenshots 1, 2, 3) -->
+  <div class="mt-16 border-b border-gray-200 overflow-x-auto">
+    <div class="flex items-center gap-2 sm:gap-6 text-xs font-bold text-gray-400 uppercase tracking-wider min-w-max pb-1">
+      
+      <button type="button" class="tab-trigger-btn px-5 py-3 rounded-full bg-gray-900 text-white font-extrabold shadow-sm transition-all cursor-pointer" data-tab="overview">
+        OVERVIEW & INCLUDED ITEMS
+      </button>
+
+      <button type="button" class="tab-trigger-btn px-5 py-3 rounded-full hover:text-gray-900 hover:bg-gray-100 transition-all cursor-pointer" data-tab="diagram">
+        32-CHANNEL TERMINAL DIAGRAM
+      </button>
+
+      <button type="button" class="tab-trigger-btn px-5 py-3 rounded-full hover:text-gray-900 hover:bg-gray-100 transition-all cursor-pointer" data-tab="setting">
+        5-BUTTON SETTING GUIDE
+      </button>
+
+      <button type="button" class="tab-trigger-btn px-5 py-3 rounded-full hover:text-gray-900 hover:bg-gray-100 transition-all cursor-pointer" data-tab="specs">
+        FULL SPECIFICATIONS
+      </button>
+
+      <button type="button" class="tab-trigger-btn px-5 py-3 rounded-full hover:text-gray-900 hover:bg-gray-100 transition-all cursor-pointer" data-tab="reviews">
+        CUSTOMER REVIEWS (3)
+      </button>
+
+    </div>
+  </div>
+
+  <!-- Tab Contents Area (Dynamic Liquid + Shopify Metafields Call + Screenshots Exact UI) -->
+  <div class="py-10">
+    
+    <!-- TAB 1: OVERVIEW & INCLUDED ITEMS -->
+    <div id="tab-content-overview" class="tab-pane-content">
+      {%- if product.metafields.custom.overview_html != blank -%}
+        {{ product.metafields.custom.overview_html }}
+      {%- else -%}
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+          <div class="lg:col-span-7 space-y-6">
+            <h3 class="text-2xl font-black text-gray-900">Product Features & Engineering</h3>
+            <div class="text-xs sm:text-sm text-gray-600 leading-relaxed space-y-3">
+              <p>{{ product.description | default: 'The LuminaStep™ Pro Dual Sensor Kit is engineered for premium home safety and aesthetic sophistication. Featuring dual precision PIR + Microwave radar motion sensors at top and bottom landings, it triggers a seamless step-by-step cascade effect as you walk. Includes ultra-dense COB LED strips, intelligent master controller box with adjustable speed, brightness, and stay-on timer.' }}</p>
+            </div>
+
+            <h4 class="text-sm font-extrabold text-gray-900 pt-2">Key Controller Highlights:</h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div class="p-4 rounded-2xl bg-gray-50 border border-gray-100 flex items-start gap-3">
+                <span class="text-blue-600 font-bold">✓</span>
+                <span class="text-xs text-gray-700">Dual PIR + Microwave motion radar sensors for zero false triggers</span>
+              </div>
+              <div class="p-4 rounded-2xl bg-gray-50 border border-gray-100 flex items-start gap-3">
+                <span class="text-blue-600 font-bold">✓</span>
+                <span class="text-xs text-gray-700">Step-by-step sequential cascade illumination effect</span>
+              </div>
+              <div class="p-4 rounded-2xl bg-gray-50 border border-gray-100 flex items-start gap-3">
+                <span class="text-blue-600 font-bold">✓</span>
+                <span class="text-xs text-gray-700">COB High-Density LED Strips (No visible hot spots)</span>
+              </div>
+              <div class="p-4 rounded-2xl bg-gray-50 border border-gray-100 flex items-start gap-3">
+                <span class="text-blue-600 font-bold">✓</span>
+                <span class="text-xs text-gray-700">Adjustable cascading speed (0.2s - 2.0s per step)</span>
+              </div>
+              <div class="p-4 rounded-2xl bg-gray-50 border border-gray-100 flex items-start gap-3">
+                <span class="text-blue-600 font-bold">✓</span>
+                <span class="text-xs text-gray-700">Smart ambient light sensor disables trigger during bright daylight</span>
+              </div>
+              <div class="p-4 rounded-2xl bg-gray-50 border border-gray-100 flex items-start gap-3">
+                <span class="text-blue-600 font-bold">✓</span>
+                <span class="text-xs text-gray-700">Supports 1 to 32 steps with expander module support</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Package Includes Dark Card -->
+          <div class="lg:col-span-5 bg-gray-950 text-white rounded-3xl p-8 border border-gray-800 shadow-xl space-y-5">
+            <h3 class="text-lg font-bold text-white flex items-center gap-2">
+              <span>🎁</span> Package Includes
+            </h3>
+            <ul class="space-y-3.5 text-xs text-gray-300">
+              <li class="flex items-start gap-3"><span class="text-blue-400 font-bold">✓</span><span>2x Precision Smart Motion Sensor Pods (Top & Bottom)</span></li>
+              <li class="flex items-start gap-3"><span class="text-blue-400 font-bold">✓</span><span>1x LuminaStep™ Master Cascading Controller</span></li>
+              <li class="flex items-start gap-3"><span class="text-blue-400 font-bold">✓</span><span>16x Pre-cut COB LED Light Strips (1.0m / 3.3ft each)</span></li>
+              <li class="flex items-start gap-3"><span class="text-blue-400 font-bold">✓</span><span>1x 100W 24V Ultra-Quiet Power Supply Adapter</span></li>
+              <li class="flex items-start gap-3"><span class="text-blue-400 font-bold">✓</span><span>1x Complete Wire Harness with Quick-Connect Snap Terminals</span></li>
+              <li class="flex items-start gap-3"><span class="text-blue-400 font-bold">✓</span><span>3M VHB Heavy-Duty Adhesive Pads & Screw Hardware</span></li>
+              <li class="flex items-start gap-3"><span class="text-blue-400 font-bold">✓</span><span>Comprehensive Illustrated Installation & Wiring Manual</span></li>
+            </ul>
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+
+    <!-- TAB 2: 32-CHANNEL TERMINAL DIAGRAM (Matching Screenshot 1) -->
+    <div id="tab-content-diagram" class="tab-pane-content hidden">
+      {%- if product.metafields.custom.terminal_diagram_html != blank -%}
+        {{ product.metafields.custom.terminal_diagram_html }}
+      {%- else -%}
+        <div class="space-y-6">
+          <div class="space-y-1">
+            <span class="text-xs font-black text-blue-600 uppercase tracking-widest">INSTALLATION LAYOUT</span>
+            <h3 class="text-2xl font-black text-gray-900">32-Channel Screw Terminal Block Map</h3>
+            <p class="text-xs text-gray-500">Each stair step connects directly to its corresponding shortcutproof output terminal on the LED-2052-V2 board.</p>
+          </div>
+
+          <!-- Dark Map Card Container -->
+          <div class="bg-gray-950 text-white p-8 rounded-3xl border border-gray-800 shadow-2xl space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              
+              <div class="p-5 rounded-2xl bg-gray-900 border border-gray-800 space-y-2">
+                <h4 class="text-xs font-bold text-blue-400 uppercase tracking-wider">1. POWER SUPPLY</h4>
+                <p class="text-xs text-gray-300">Connect 12V or 24V constant voltage power supply to (+) and (-) input clamps.</p>
+                <span class="text-xs font-bold text-amber-400 block pt-1">500W Max Load Capacity.</span>
+              </div>
+
+              <div class="p-5 rounded-2xl bg-gray-900 border border-gray-800 space-y-2">
+                <h4 class="text-xs font-bold text-blue-400 uppercase tracking-wider">2. DUAL PIR PROBES</h4>
+                <p class="text-xs text-gray-300">Port A = Bottom Sensor, Port B = Top Sensor. Includes 5-meter cables.</p>
+                <span class="text-xs font-bold text-green-400 block pt-1">Plug & Play Extension Wires.</span>
+              </div>
+
+              <div class="p-5 rounded-2xl bg-gray-900 border border-gray-800 space-y-2">
+                <h4 class="text-xs font-bold text-blue-400 uppercase tracking-wider">3. STEP CHANNELS</h4>
+                <p class="text-xs text-gray-300">Connect Step 1 through Step 32 light strip positive/negative wires.</p>
+                <span class="text-xs font-bold text-blue-400 block pt-1">Shortcutproof protection.</span>
+              </div>
+
+            </div>
+
+            <!-- Step Landing Pill Boxes -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 pt-2">
+              <div class="p-4 rounded-xl bg-gray-900/90 border border-blue-900/50 text-center space-y-1">
+                <span class="text-xs font-bold text-blue-400 font-mono block">Steps 1 - 8</span>
+                <span class="text-[10px] text-gray-400 uppercase">Lower Landing</span>
+              </div>
+              <div class="p-4 rounded-xl bg-gray-900/90 border border-blue-900/50 text-center space-y-1">
+                <span class="text-xs font-bold text-blue-400 font-mono block">Steps 9 - 16</span>
+                <span class="text-[10px] text-gray-400 uppercase">Mid Flight</span>
+              </div>
+              <div class="p-4 rounded-xl bg-gray-900/90 border border-blue-900/50 text-center space-y-1">
+                <span class="text-xs font-bold text-blue-400 font-mono block">Steps 17 - 24</span>
+                <span class="text-[10px] text-gray-400 uppercase">Upper Flight</span>
+              </div>
+              <div class="p-4 rounded-xl bg-gray-900/90 border border-blue-900/50 text-center space-y-1">
+                <span class="text-xs font-bold text-blue-400 font-mono block">Steps 25 - 32</span>
+                <span class="text-[10px] text-gray-400 uppercase">Top Landing</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      {%- endif -%}
+    </div>
+
+    <!-- TAB 3: 5-BUTTON SETTING GUIDE (Matching Screenshot 2) -->
+    <div id="tab-content-setting" class="tab-pane-content hidden">
+      {%- if product.metafields.custom.setting_guide_html != blank -%}
+        {{ product.metafields.custom.setting_guide_html }}
+      {%- else -%}
+        <div class="space-y-6">
+          <div class="space-y-1">
+            <span class="text-xs font-black text-blue-600 uppercase tracking-widest">CALIBRATION MANUAL</span>
+            <h3 class="text-2xl font-black text-gray-900">5-Button Setting Interface</h3>
+            <p class="text-xs text-gray-500">Easily program step counts, motion speed, brightness, and stay-on delay.</p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4">
+            
+            <div class="p-5 rounded-3xl bg-white border border-gray-200 shadow-sm space-y-3">
+              <div class="w-9 h-9 rounded-full bg-gray-900 text-white font-mono font-bold flex items-center justify-center text-sm">1</div>
+              <h4 class="text-sm font-extrabold text-gray-900 uppercase">SETTING Key</h4>
+              <p class="text-xs text-gray-500">Hold 3 seconds to enter setting menu.</p>
+            </div>
+
+            <div class="p-5 rounded-3xl bg-white border border-gray-200 shadow-sm space-y-3">
+              <div class="w-9 h-9 rounded-full bg-blue-600 text-white font-mono font-bold flex items-center justify-center text-sm">2</div>
+              <h4 class="text-sm font-extrabold text-gray-900 uppercase">STEP Key</h4>
+              <p class="text-xs text-gray-500">Press to set step quantity from 1 to 32.</p>
+            </div>
+
+            <div class="p-5 rounded-3xl bg-white border border-gray-200 shadow-sm space-y-3">
+              <div class="w-9 h-9 rounded-full bg-gray-900 text-white font-mono font-bold flex items-center justify-center text-sm">3</div>
+              <h4 class="text-sm font-extrabold text-gray-900 uppercase">SPEED Key</h4>
+              <p class="text-xs text-gray-500">Choose from 9 cascade speeds.</p>
+            </div>
+
+            <div class="p-5 rounded-3xl bg-white border border-gray-200 shadow-sm space-y-3">
+              <div class="w-9 h-9 rounded-full bg-blue-600 text-white font-mono font-bold flex items-center justify-center text-sm">4</div>
+              <h4 class="text-sm font-extrabold text-gray-900 uppercase">DELAY Key</h4>
+              <p class="text-xs text-gray-500">Adjust stay-on timer (10s to 180s).</p>
+            </div>
+
+            <div class="p-5 rounded-3xl bg-white border border-gray-200 shadow-sm space-y-3">
+              <div class="w-9 h-9 rounded-full bg-gray-900 text-white font-mono font-bold flex items-center justify-center text-sm">5</div>
+              <h4 class="text-sm font-extrabold text-gray-900 uppercase">BRIGHTNESS Key</h4>
+              <p class="text-xs text-gray-500">5 dimming levels (20% to 100%).</p>
+            </div>
+
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+
+    <!-- TAB 4: FULL SPECIFICATIONS (Matching Screenshot 3) -->
+    <div id="tab-content-specs" class="tab-pane-content hidden">
+      {%- if product.metafields.custom.specifications_html != blank -%}
+        {{ product.metafields.custom.specifications_html }}
+      {%- else -%}
+        <div class="space-y-6 max-w-4xl">
+          <h3 class="text-2xl font-black text-gray-900">Technical Specifications</h3>
+          
+          <div class="bg-white rounded-3xl border border-gray-200 overflow-hidden shadow-sm">
+            <table class="w-full text-xs">
+              <tbody class="divide-y divide-gray-100">
+                <tr class="hover:bg-gray-50"><td class="p-4 font-semibold text-gray-500 w-1/3">Brand</td><td class="p-4 font-bold text-gray-900">{{ product.vendor | default: 'Auslese Robotics / LuminaStep' }}</td></tr>
+                <tr class="hover:bg-gray-50"><td class="p-4 font-semibold text-gray-500">Model Number</td><td class="p-4 font-bold text-gray-900">{{ product.variants.first.sku | default: 'LED-2052-V2 Shortcutproof Controller' }}</td></tr>
+                <tr class="hover:bg-gray-50"><td class="p-4 font-semibold text-gray-500">Operating Voltage</td><td class="p-4 font-bold text-gray-900">DC 12V / 24V Constant Voltage</td></tr>
+                <tr class="hover:bg-gray-50"><td class="p-4 font-semibold text-gray-500">Max Power Load</td><td class="p-4 font-bold text-gray-900">500W Total Load Support (3A x 32 Steps)</td></tr>
+                <tr class="hover:bg-gray-50"><td class="p-4 font-semibold text-gray-500">Output Channels</td><td class="p-4 font-bold text-gray-900">32 Steps Max (User configurable 1 to 32)</td></tr>
+                <tr class="hover:bg-gray-50"><td class="p-4 font-semibold text-gray-500">Sensors Included</td><td class="p-4 font-bold text-gray-900">2x PIR Motion Sensors (Sensor Port A & B)</td></tr>
+                <tr class="hover:bg-gray-50"><td class="p-4 font-semibold text-gray-500">Protection</td><td class="p-4 font-bold text-green-600">Built-In Shortcutproof & Over-Current Safeguard</td></tr>
+                <tr class="hover:bg-gray-50"><td class="p-4 font-semibold text-gray-500">Controller Material</td><td class="p-4 font-bold text-gray-900">Solid Anodized Aluminum Alloy Shell</td></tr>
+                <tr class="hover:bg-gray-50"><td class="p-4 font-semibold text-gray-500">Control Method</td><td class="p-4 font-bold text-gray-900">On-Board Button Setting (1 to 5 Setting Keys)</td></tr>
+                <tr class="hover:bg-gray-50"><td class="p-4 font-semibold text-gray-500">Applicable Area</td><td class="p-4 font-bold text-gray-900">Home, Hotel, Villa, Duplex Staircases</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+
+    <!-- TAB 5: CUSTOMER REVIEWS (Judge.me Shopify App Integration Tag + Fallback) -->
+    <div id="tab-content-reviews" class="tab-pane-content hidden">
+      <div class="space-y-6">
+        <h3 class="text-2xl font-black text-gray-900">Verified Customer Reviews</h3>
+        
+        <!-- Judge.me Shopify App Integration Widget Hook -->
+        <div id="judgeme_product_reviews" class="jdgm-widget jdgm-review-widget" data-product-title="{{ product.title | escape }}" data-id="{{ product.id }}">
+          {{ product.metafields.judgeme.widget }}
+        </div>
+
+        <!-- Built-in Review Cards Fallback -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
+          <div class="p-6 rounded-3xl bg-gray-50 border border-gray-100 space-y-3">
+            <div class="flex items-center text-amber-400 font-bold text-sm">★★★★★</div>
+            <h4 class="font-bold text-sm text-gray-900">Robert K.</h4>
+            <p class="text-xs text-gray-600">"The sensor accuracy is flawless. No false triggers from pets running past on the lower floor. The delay knob lets me set it to stay lit for 45 seconds which is ideal."</p>
+            <span class="text-[10px] text-green-600 font-bold block">✓ Verified Purchase</span>
+          </div>
+
+          <div class="p-6 rounded-3xl bg-gray-50 border border-gray-100 space-y-3">
+            <div class="flex items-center text-amber-400 font-bold text-sm">★★★★★</div>
+            <h4 class="font-bold text-sm text-gray-900">Sophia Chen</h4>
+            <p class="text-xs text-gray-600">"Clear instructions and labeled quick-snap wire harness made wiring 16 steps take under 2 hours. Very impressed by the packaging and solid power supply."</p>
+            <span class="text-[10px] text-green-600 font-bold block">✓ Verified Purchase</span>
+          </div>
+
+          <div class="p-6 rounded-3xl bg-gray-50 border border-gray-100 space-y-3">
+            <div class="flex items-center text-amber-400 font-bold text-sm">★★★★★</div>
+            <h4 class="font-bold text-sm text-gray-900">James Wright</h4>
+            <p class="text-xs text-gray-600">"We got the Ultra RGB-W kit. Setting it to warm 3000K white for daily night guidance, and subtle blue cascade for weekend gatherings is a huge hit!"</p>
+            <span class="text-[10px] text-green-600 font-bold block">✓ Verified Purchase</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Pass Native Shopify Variants Data to JS -->
+<script id="ShopifyVariantsJson" type="application/json">
+  {{ product.variants | json }}
+</script>
+
+<!-- Interactive Product Page Logic & Tab Switcher Script -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // 1. Tab Switcher Logic
+    const tabBtns = document.querySelectorAll('.tab-trigger-btn');
+    const tabPanes = document.querySelectorAll('.tab-pane-content');
+
+    tabBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const targetTab = btn.getAttribute('data-tab');
+
+        // Reset all buttons
+        tabBtns.forEach(b => {
+          b.className = 'tab-trigger-btn px-5 py-3 rounded-full hover:text-gray-900 hover:bg-gray-100 transition-all cursor-pointer text-gray-400';
+        });
+
+        // Highlight active button
+        btn.className = 'tab-trigger-btn px-5 py-3 rounded-full bg-gray-900 text-white font-extrabold shadow-sm transition-all cursor-pointer';
+
+        // Hide all tab panes
+        tabPanes.forEach(pane => pane.classList.add('hidden'));
+
+        // Show target tab pane
+        const activePane = document.getElementById(`tab-content-${targetTab}`);
+        if (activePane) activePane.classList.remove('hidden');
+      });
+    });
+
+    // 2. Read native variants from Shopify
+    let shopifyVariants = [];
+    try {
+      const jsonEl = document.getElementById('ShopifyVariantsJson');
+      if (jsonEl) shopifyVariants = JSON.parse(jsonEl.textContent || '[]');
+    } catch (e) {
+      console.error('Could not parse shopify variants JSON', e);
+    }
+
+    let currency = 'INR';
+    let packageType = 'full-kit';
+    let activeSteps = 32;
+    let quantity = 1;
+    let couponApplied = false;
+    let protectionPlan = false;
+    let isSimulating = false;
+
+    const INR_RATE = 83.2;
+
+    // Elements
+    const qtyInput = document.getElementById('ProductQtyInput');
+    const qtyMinusBtn = document.getElementById('qty-minus');
+    const qtyPlusBtn = document.getElementById('qty-plus');
+
+    const displayUnitPrice = document.getElementById('DisplayUnitPrice');
+    const displayOriginalPrice = document.getElementById('DisplayOriginalPrice');
+    const stickyPrice = document.getElementById('StickyCalculatedPrice');
+    const protectionCostText = document.getElementById('ProtectionCostText');
+    const selectedVariantIdInput = document.getElementById('SelectedVariantId');
+
+    const currencyInrBtn = document.getElementById('currency-inr');
+    const currencyUsdBtn = document.getElementById('currency-usd');
+
+    const couponCheck = document.getElementById('coupon-check');
+    const planCheck = document.getElementById('plan-check');
+
+    const pkgBoardBtn = document.getElementById('pkg-board');
+    const pkgKitBtn = document.getElementById('pkg-kit');
+
+    const stepBtns = document.querySelectorAll('.step-btn');
+    const configStepsLabel = document.getElementById('ConfigStepsLabel');
+    const simulatorStepsCount = document.getElementById('SimulatorActiveStepsCount');
+
+    const voltageBtns = document.querySelectorAll('.voltage-btn');
+    const warmthBtns = document.querySelectorAll('.warmth-btn');
+
+    const btnTriggerBottom = document.getElementById('btn-trigger-bottom');
+    const btnTriggerTop = document.getElementById('btn-trigger-top');
+
+    // Dynamic Price Calculation strictly synced with Shopify Backend Database (INR Only)
+    function calculatePrice() {
+      let matchedVariant = null;
+      if (shopifyVariants.length > 0) {
+        if (packageType === 'controller-only') {
+          matchedVariant = shopifyVariants.find(v => (v.option1 && v.option1.toLowerCase().includes('controller')) || (v.title && v.title.toLowerCase().includes('controller')) || (v.title && v.title.toLowerCase().includes('board')));
+        } else {
+          matchedVariant = shopifyVariants.find(v => (v.option1 && v.option1.toLowerCase().includes('kit')) || (v.title && v.title.toLowerCase().includes('kit')) || (v.title && v.title.toLowerCase().includes('complete')));
+        }
+        if (!matchedVariant) {
+          matchedVariant = shopifyVariants[0];
+        }
+      }
+
+      let basePrice = 12479;
+      let origPrice = 16639;
+
+      if (matchedVariant) {
+        // Direct Shopify Backend Variant Price (in INR)
+        basePrice = matchedVariant.price / 100;
+        if (matchedVariant.compare_at_price && matchedVariant.compare_at_price > 0) {
+          origPrice = matchedVariant.compare_at_price / 100;
+        } else {
+          origPrice = Math.round(basePrice * 1.25);
+        }
+        if (selectedVariantIdInput) selectedVariantIdInput.value = matchedVariant.id;
+      } else {
+        basePrice = packageType === 'full-kit' ? 12479 : 2079;
+        origPrice = packageType === 'full-kit' ? 16639 : 2899;
+      }
+
+      const couponMult = couponApplied ? 0.98 : 1.0;
+      const unitINR = Math.round(basePrice * couponMult) + (protectionPlan ? 830 : 0);
+      const totalINR = unitINR * quantity;
+      const origINR = Math.round(origPrice) * quantity;
+
+      if (displayUnitPrice) displayUnitPrice.textContent = `₹${unitINR.toLocaleString('en-IN')}`;
+      if (displayOriginalPrice) displayOriginalPrice.textContent = `₹${origINR.toLocaleString('en-IN')}`;
+      if (stickyPrice) stickyPrice.textContent = `₹${totalINR.toLocaleString('en-IN')}`;
+      if (protectionCostText) protectionCostText.textContent = `+₹830`;
+    }
+
+    // 3. Quantity (+ / -) Events
+    if (qtyMinusBtn && qtyPlusBtn && qtyInput) {
+      qtyMinusBtn.addEventListener('click', () => {
+        if (quantity > 1) {
+          quantity--;
+          qtyInput.value = quantity;
+          calculatePrice();
+        }
+      });
+      qtyPlusBtn.addEventListener('click', () => {
+        quantity++;
+        qtyInput.value = quantity;
+        calculatePrice();
+      });
+    }
+
+    // 4. Currency Switcher Events
+    if (currencyInrBtn && currencyUsdBtn) {
+      currencyInrBtn.addEventListener('click', () => {
+        currency = 'INR';
+        currencyInrBtn.className = 'px-3 py-1 rounded-full text-xs font-bold bg-gray-900 text-white transition-all shadow-sm cursor-pointer';
+        currencyUsdBtn.className = 'px-3 py-1 rounded-full text-xs font-bold bg-gray-100 text-gray-600 hover:bg-gray-200 transition-all cursor-pointer';
+        calculatePrice();
+      });
+      currencyUsdBtn.addEventListener('click', () => {
+        currency = 'USD';
+        currencyUsdBtn.className = 'px-3 py-1 rounded-full text-xs font-bold bg-gray-900 text-white transition-all shadow-sm cursor-pointer';
+        currencyInrBtn.className = 'px-3 py-1 rounded-full text-xs font-bold bg-gray-100 text-gray-600 hover:bg-gray-200 transition-all cursor-pointer';
+        calculatePrice();
+      });
+    }
+
+    // 5. Package Type Events
+    if (pkgBoardBtn && pkgKitBtn) {
+      pkgBoardBtn.addEventListener('click', () => {
+        packageType = 'controller-only';
+        pkgBoardBtn.className = 'pkg-type-btn p-3 rounded-2xl border-2 border-blue-600 bg-blue-50/60 text-blue-900 font-bold text-left transition-all shadow-sm cursor-pointer';
+        pkgKitBtn.className = 'pkg-type-btn p-3 rounded-2xl border border-gray-200 text-left transition-all hover:border-gray-300 text-gray-700 cursor-pointer';
+        calculatePrice();
+      });
+      pkgKitBtn.addEventListener('click', () => {
+        packageType = 'full-kit';
+        pkgKitBtn.className = 'pkg-type-btn p-3 rounded-2xl border-2 border-blue-600 bg-blue-50/60 text-blue-900 font-bold text-left transition-all shadow-sm cursor-pointer';
+        pkgBoardBtn.className = 'pkg-type-btn p-3 rounded-2xl border border-gray-200 text-left transition-all hover:border-gray-300 text-gray-700 cursor-pointer';
+        calculatePrice();
+      });
+    }
+
+    // 6. Configure Step Count Buttons
+    stepBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        stepBtns.forEach(b => b.className = 'step-btn py-1.5 px-1 rounded-xl border border-gray-200 text-center text-gray-600 cursor-pointer');
+        btn.className = 'step-btn active-step py-1.5 px-1 rounded-xl border bg-gray-900 border-gray-900 text-white font-bold text-center cursor-pointer';
+        
+        activeSteps = parseInt(btn.getAttribute('data-steps'), 10);
+        if (configStepsLabel) configStepsLabel.textContent = `${activeSteps} Steps`;
+        if (simulatorStepsCount) simulatorStepsCount.textContent = `${activeSteps} Stair Steps`;
+        updateSimulatorGridCount(activeSteps);
+      });
+    });
+
+    function updateSimulatorGridCount(count) {
+      for (let i = 0; i < 32; i++) {
+        const stepEl = document.getElementById(`sim-step-${i}`);
+        if (stepEl) {
+          stepEl.style.display = i < count ? 'flex' : 'none';
+        }
+      }
+    }
+
+    // 7. Voltage Buttons
+    voltageBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        voltageBtns.forEach(b => b.className = 'voltage-btn py-2 px-3 rounded-xl border border-gray-200 text-center text-gray-600 cursor-pointer');
+        btn.className = 'voltage-btn active-volt py-2 px-3 rounded-xl border-2 border-blue-600 bg-blue-600 text-white font-bold text-center shadow-sm cursor-pointer';
+      });
+    });
+
+    // 8. LED Warmth Buttons
+    warmthBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        warmthBtns.forEach(b => b.className = 'warmth-btn py-2 px-2 rounded-xl border border-gray-200 text-center text-gray-600 cursor-pointer');
+        btn.className = 'warmth-btn active-warmth py-2 px-2 rounded-xl border bg-gray-900 border-gray-900 text-white font-bold text-center cursor-pointer';
+      });
+    });
+
+    // 9. Coupon & Protection Checkboxes
+    if (couponCheck) {
+      couponCheck.addEventListener('change', (e) => {
+        couponApplied = e.target.checked;
+        calculatePrice();
+      });
+    }
+    if (planCheck) {
+      planCheck.addEventListener('change', (e) => {
+        protectionPlan = e.target.checked;
+        calculatePrice();
+      });
+    }
+
+    // 10. Controller LED Simulator Animation
+    function runSim(dir) {
+      if (isSimulating) return;
+      isSimulating = true;
+
+      const total = activeSteps;
+      const order = dir === 'bottom' 
+        ? Array.from({ length: total }, (_, i) => i)
+        : Array.from({ length: total }, (_, i) => total - 1 - i);
+
+      order.forEach((stepIdx, i) => {
+        setTimeout(() => {
+          const stepEl = document.getElementById(`sim-step-${stepIdx}`);
+          if (stepEl) {
+            stepEl.className = 'sim-step-box h-6 rounded text-[8px] font-mono flex items-center justify-center font-extrabold bg-amber-400 text-black shadow-lg scale-105 transition-all duration-150';
+          }
+        }, i * 100);
+      });
+
+      setTimeout(() => {
+        order.forEach((stepIdx, i) => {
+          setTimeout(() => {
+            const stepEl = document.getElementById(`sim-step-${stepIdx}`);
+            if (stepEl) {
+              stepEl.className = 'sim-step-box h-6 rounded bg-gray-800 text-[8px] font-mono flex items-center justify-center text-gray-500 transition-all duration-150';
+            }
+          }, i * 80);
+        });
+
+        setTimeout(() => {
+          isSimulating = false;
+        }, order.length * 80 + 200);
+      }, order.length * 100 + 1000);
+    }
+
+    // 11. Express Buy Now & Add To Cart Button Handlers
+    const addToCartBtn = document.getElementById('AddToCartBtn');
+    const addToCartBtnText = document.getElementById('AddToCartBtnText');
+    const expressBuyNowBtn = document.getElementById('ExpressBuyNowBtn');
+
+    if (addToCartBtn) {
+      addToCartBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const variantId = selectedVariantIdInput ? selectedVariantIdInput.value : '{{ product.selected_or_first_available_variant.id }}';
+        const qty = parseInt(qtyInput ? qtyInput.value : '1', 10);
+
+        if (addToCartBtnText) addToCartBtnText.textContent = '⏳ Adding...';
+
+        fetch('/cart/add.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: variantId, quantity: qty })
+        })
+        .then(res => res.json())
+        .then(() => {
+          if (addToCartBtnText) addToCartBtnText.textContent = '✓ Added to Cart!';
+          setTimeout(() => {
+            if (addToCartBtnText) addToCartBtnText.textContent = 'Add to Cart';
+          }, 2000);
+
+          if (window.themeCart && typeof window.themeCart.openCart === 'function') {
+            window.themeCart.openCart();
+          } else {
+            window.location.href = '/cart';
+          }
+        })
+        .catch(err => {
+          console.error(err);
+          if (addToCartBtnText) addToCartBtnText.textContent = 'Add to Cart';
+        });
+      });
+    }
+
+    if (expressBuyNowBtn) {
+      expressBuyNowBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const variantId = selectedVariantIdInput ? selectedVariantIdInput.value : '{{ product.selected_or_first_available_variant.id }}';
+        const qty = parseInt(qtyInput ? qtyInput.value : '1', 10);
+
+        expressBuyNowBtn.textContent = '⏳ Redirecting to Checkout...';
+
+        fetch('/cart/add.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: variantId, quantity: qty })
+        })
+        .then(res => res.json())
+        .then(() => {
+          window.location.href = '/checkout';
+        })
+        .catch(() => {
+          window.location.href = '/checkout';
+        });
+      });
+    }
+
+    // Initial price calculation
+    calculatePrice();
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Main Product Page",
+  "settings": []
+}
+{% endschema %}

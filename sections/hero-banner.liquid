@@ -1,0 +1,135 @@
+<section class="relative pt-8 md:pt-16 pb-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto hero-mask rounded-3xl my-6">
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+    
+    <!-- Left Copy -->
+    <div class="lg:col-span-6 space-y-6 text-left relative z-10">
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+        <span class="text-xs font-bold text-blue-500 uppercase tracking-[0.2em]">{{ section.settings.badge_text | default: "Smart Home Excellence" }}</span>
+      </div>
+
+      <h1 class="text-5xl sm:text-6xl lg:text-[76px] font-bold leading-[0.95] tracking-tight text-gray-900">
+        Light Up Every Step <span class="text-blue-500 italic">Automatically.</span>
+      </h1>
+
+      <p class="text-base sm:text-lg text-gray-500 leading-relaxed max-w-md">
+        {{ section.settings.subheading | default: "Intelligent motion sensors for staircases. Improve home safety, save energy, and elevate your interior with high-end automated illumination." }}
+      </p>
+
+      <div class="flex flex-wrap items-center gap-4 pt-2">
+        <a href="{{ section.settings.button_link | default: '/collections/all' }}" class="px-8 sm:px-10 py-4 sm:py-5 bg-[#111111] hover:bg-black text-white font-bold rounded-2xl flex items-center gap-3 shadow-lg shadow-gray-200 transition-all hover:scale-[1.02]">
+          <span>{{ section.settings.button_label | default: "Shop Series 2" }}</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+        </a>
+
+        <a href="#interactive-demo" class="px-8 sm:px-10 py-4 sm:py-5 bg-white border border-gray-200 text-gray-900 font-bold rounded-2xl hover:bg-gray-50 transition-all flex items-center gap-2">
+          <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+          <span>Watch Demo</span>
+        </a>
+      </div>
+
+      <!-- Social proof trust bar -->
+      <div class="flex items-center gap-4 pt-4 text-sm text-gray-400 font-medium">
+        <div class="flex -space-x-2">
+          <div class="w-8 h-8 rounded-full bg-gray-200 border-2 border-white flex items-center justify-center font-bold text-[10px] text-gray-600">4.9</div>
+          <div class="w-8 h-8 rounded-full bg-blue-100 border-2 border-white flex items-center justify-center font-bold text-[10px] text-blue-600">25k</div>
+          <div class="w-8 h-8 rounded-full bg-gray-900 border-2 border-white flex items-center justify-center font-bold text-[10px] text-white">★</div>
+        </div>
+        <span class="text-gray-600 font-semibold">Trusted by 25,000+ smart homes worldwide</span>
+      </div>
+    </div>
+
+    <!-- Right Graphic Image -->
+    <div class="lg:col-span-6 relative">
+      {%- if section.settings.hero_image != blank -%}
+        <img src="{{ section.settings.hero_image | image_url: width: 1200 }}" alt="{{ section.settings.heading | escape }}" width="1200" height="800" class="rounded-3xl shadow-2xl w-full object-cover">
+      {%- else -%}
+        <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=1200" alt="Smart Staircase Lighting" width="1200" height="800" class="rounded-3xl shadow-2xl w-full object-cover">
+      {%- endif -%}
+    </div>
+
+  </div>
+</section>
+
+<!-- Quick Metrics Bar -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
+  <div class="bg-white rounded-3xl p-6 border border-gray-100 flex flex-col justify-between shadow-sm">
+    <div class="text-blue-500 font-black text-2xl">85%</div>
+    <div>
+      <h3 class="font-bold text-sm text-gray-900">Energy Saving</h3>
+      <p class="text-xs text-gray-400">Automated daylight on/off logic</p>
+    </div>
+  </div>
+
+  <div class="bg-white rounded-3xl p-6 border border-gray-100 flex flex-col justify-between shadow-sm">
+    <div class="text-blue-500 font-black text-2xl">10ms</div>
+    <div>
+      <h3 class="font-bold text-sm text-gray-900">Latency Free</h3>
+      <p class="text-xs text-gray-400">Instant motion radar response</p>
+    </div>
+  </div>
+
+  <div class="bg-white rounded-3xl p-6 border border-gray-100 flex flex-col justify-between shadow-sm">
+    <div class="text-blue-500 font-black text-2xl">DIY</div>
+    <div>
+      <h3 class="font-bold text-sm text-gray-900">Easy Installation</h3>
+      <p class="text-xs text-gray-400">Plug & Play setup</p>
+    </div>
+  </div>
+
+  <div class="bg-[#111111] text-white rounded-3xl p-6 flex flex-col justify-between shadow-xl">
+    <div class="text-blue-400 font-bold uppercase text-[10px] tracking-widest">Verified Quality</div>
+    <div>
+      <h3 class="font-bold text-sm">24-Month Warranty</h3>
+      <p class="text-xs text-white/50">Global hardware support included</p>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero Banner",
+  "settings": [
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge Tagline",
+      "default": "Smart Home Excellence"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Main Heading",
+      "default": "Light Up Every Step Automatically."
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading Description",
+      "default": "Intelligent motion sensors for staircases. Improve home safety, save energy, and elevate your interior with high-end automated illumination."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Shop Series 2"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Target Link",
+      "default": "/collections/all"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero Image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Banner"
+    }
+  ]
+}
+{% endschema %}

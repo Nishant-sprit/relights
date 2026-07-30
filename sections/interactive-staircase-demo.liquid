@@ -1,0 +1,91 @@
+<section class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+  <div class="bg-gray-900 text-white rounded-3xl p-8 sm:p-12 shadow-2xl relative overflow-hidden">
+    
+    <!-- Title & Controls Header -->
+    <div class="text-center max-w-2xl mx-auto space-y-4 mb-10">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-semibold">
+        <span>{{ section.settings.badge_label | default: "Interactive Live Demo" }}</span>
+      </div>
+      <h2 class="text-3xl sm:text-4xl font-extrabold text-white">
+        {{ section.settings.title | default: "Experience Sequential Step Cascade" }}
+      </h2>
+      <p class="text-gray-400 text-sm sm:text-base">
+        {{ section.settings.subtitle | default: "Test motion detection triggers in real-time. Watch steps illuminate smoothly as you walk up or down." }}
+      </p>
+    </div>
+
+    <!-- Web Component Wrapper -->
+    <interactive-staircase class="block">
+      
+      <!-- Color Picker Buttons -->
+      <div class="flex flex-wrap items-center justify-center gap-3 mb-8">
+        <span class="text-xs text-gray-400 font-medium mr-2">LED Light Tone:</span>
+        <button data-color="blue" class="color-picker-btn px-4 py-1.5 rounded-xl bg-blue-600/30 border border-blue-500 text-blue-300 text-xs font-bold hover:bg-blue-600/50 transition-all">Cyan Blue</button>
+        <button data-color="warm" class="color-picker-btn px-4 py-1.5 rounded-xl bg-amber-600/30 border border-amber-500 text-amber-300 text-xs font-bold hover:bg-amber-600/50 transition-all">Warm Amber</button>
+        <button data-color="cool" class="color-picker-btn px-4 py-1.5 rounded-xl bg-sky-600/30 border border-sky-400 text-sky-200 text-xs font-bold hover:bg-sky-600/50 transition-all">Cool White</button>
+        <button data-color="rgb" class="color-picker-btn px-4 py-1.5 rounded-xl bg-purple-600/30 border border-purple-500 text-purple-300 text-xs font-bold hover:bg-purple-600/50 transition-all">RGB Rainbow</button>
+      </div>
+
+      <!-- Action Simulation Buttons -->
+      <div class="flex flex-wrap justify-center gap-4 mb-12">
+        <button id="btn-walk-up" class="px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl flex items-center gap-2 shadow-lg shadow-blue-500/25 transition-all">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
+          <span>Simulate Walking UP</span>
+        </button>
+
+        <button id="btn-walk-down" class="px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl flex items-center gap-2 shadow-lg shadow-blue-500/25 transition-all">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+          <span>Simulate Walking DOWN</span>
+        </button>
+
+        <button id="btn-reset" class="px-4 py-3 bg-gray-800 hover:bg-gray-700 text-gray-300 font-medium rounded-xl flex items-center gap-2 transition-all">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+          <span>Reset</span>
+        </button>
+      </div>
+
+      <!-- Staircase Grid Display (12 Steps) -->
+      <div class="max-w-xl mx-auto space-y-2 bg-gray-950 p-6 rounded-2xl border border-gray-800 shadow-inner">
+        {%- for i in (1..12) -%}
+          <div data-step-index="{{ forloop.index0 }}" class="stair-step-item relative h-9 bg-gray-900 border border-gray-800 rounded-lg cursor-pointer px-4 flex items-center justify-between group hover:border-gray-700 transition-all">
+            <span class="text-xs font-semibold text-gray-400">Step {{ forloop.index }}</span>
+            <div class="led-light-bar absolute bottom-0 left-0 right-0 h-1.5 rounded-full bg-gradient-to-r from-blue-500 to-cyan-400 opacity-15 shadow-lg"></div>
+          </div>
+        {%- endfor -%}
+      </div>
+
+    </interactive-staircase>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Staircase Simulator",
+  "settings": [
+    {
+      "type": "text",
+      "id": "badge_label",
+      "label": "Badge Label",
+      "default": "Interactive Live Demo"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Experience Sequential Step Cascade"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Section Subtitle",
+      "default": "Test motion detection triggers in real-time. Watch steps illuminate smoothly as you walk up or down."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Staircase Simulator"
+    }
+  ]
+}
+{% endschema %}

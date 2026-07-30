@@ -1,27 +1,73 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
-    "hero": {
-      "type": "hero",
+    "hero_banner": {
+      "type": "hero-banner",
       "settings": {
-        "heading": "Transform Your Staircase with Smart Motion Lighting",
-        "subheading": "Automated step-by-step illumination, customizable RGBW colors, motion sensors, and seamless smart home integrations."
+        "badge_text": "Smart Home Excellence",
+        "heading": "Light Up Every Step Automatically.",
+        "subheading": "Intelligent motion sensors for staircases. Improve home safety, save energy, and elevate your interior with high-end automated illumination.",
+        "button_label": "Shop Series 2",
+        "button_link": "/collections/all"
       }
-    },
-    "simulator": {
-      "type": "interactive-staircase",
-      "settings": {}
     },
     "featured_products": {
       "type": "featured-products",
       "settings": {
-        "title": "Smart Stair Controllers & LED Lights",
-        "products_to_show": 4
+        "badge": "Trending Collection",
+        "title": "Smart Staircase Lighting Systems"
       }
+    },
+    "why_choose_relights": {
+      "type": "why-choose-relights",
+      "settings": {}
+    },
+    "staircase_simulator": {
+      "type": "interactive-staircase-demo",
+      "settings": {
+        "badge_label": "Interactive Live Demo",
+        "title": "Experience Sequential Step Cascade",
+        "subtitle": "Test motion detection triggers in real-time. Watch steps illuminate smoothly as you walk up or down."
+      }
+    },
+    "feature_grid": {
+      "type": "feature-grid",
+      "settings": {}
+    },
+    "comparison_table": {
+      "type": "comparison-table",
+      "settings": {}
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "settings": {}
+    },
+    "faq_accordion": {
+      "type": "faq-accordion",
+      "settings": {}
+    },
+    "trust_badges": {
+      "type": "trust-badges",
+      "settings": {}
     }
   },
   "order": [
-    "hero",
-    "simulator",
-    "featured_products"
+    "hero_banner",
+    "featured_products",
+    "why_choose_relights",
+    "staircase_simulator",
+    "feature_grid",
+    "comparison_table",
+    "testimonials",
+    "faq_accordion",
+    "trust_badges"
   ]
 }

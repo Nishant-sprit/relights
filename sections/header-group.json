@@ -8,13 +8,15 @@
  * ------------------------------------------------------------
  */
 {
+  "name": "t:sections.header.name",
+  "type": "header",
   "sections": {
-    "main_product": {
-      "type": "main-product",
+    "header": {
+      "type": "header",
       "settings": {}
     }
   },
   "order": [
-    "main_product"
+    "header"
   ]
 }

@@ -1,117 +1,214 @@
-<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-  <div class="flex items-center justify-between mb-8">
-    <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Trending</h2>
-    <a href="/collections/all" class="text-xs font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 px-4 py-2 rounded-full transition-colors">
-      View All &rarr;
-    </a>
-  </div>
-
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-    <!-- Product 1 -->
-    <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm hover:shadow-md transition-all flex flex-col justify-between group">
-      <div>
-        <div class="relative bg-slate-50 rounded-xl p-4 mb-4 flex items-center justify-center min-h-[180px]">
-          <span class="absolute top-3 left-3 bg-red-600 text-white text-[10px] font-extrabold px-2.5 py-1 rounded-md uppercase">BESTSELLER</span>
-          <img src="https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&w=400&q=80" alt="Relights Gen 3 Smart Staircase Motion Controller Kit" class="h-32 object-contain group-hover:scale-105 transition-transform">
-        </div>
-        <h3 class="font-bold text-sm text-slate-900 line-clamp-2">Relights Gen 3 Smart Staircase Motion Controller Kit</h3>
-        <div class="flex items-center gap-1 my-2 text-amber-500 text-xs font-bold">
-          <span>★ 4.9</span>
-          <span class="text-slate-400 font-normal">(182)</span>
-        </div>
-        <p class="text-xs text-slate-500 line-clamp-2 mb-3">Flagship dual PIR motion sensor controller with cascading step illumination.</p>
-      </div>
-      <div>
-        <div class="flex items-baseline gap-2 mb-3">
-          <span class="text-lg font-black text-slate-900">Rs. 5,799.00</span>
-          <span class="text-xs text-slate-400 line-through">Rs. 6,999.00</span>
-        </div>
-        <a href="/collections/all" class="w-full bg-slate-950 hover:bg-blue-600 text-white text-xs font-bold py-2.5 rounded-xl block text-center transition-colors">
-          Buy it now
-        </a>
-      </div>
+<section class="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-6 sm:space-y-8">
+  
+  <!-- Header with Prev/Next Controls -->
+  <div class="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4">
+    <div>
+      <span class="text-xs font-black text-blue-600 uppercase tracking-widest block mb-1 font-mono">
+        {{ section.settings.badge | default: "Featured Collection" }}
+      </span>
+      <h2 class="text-2xl sm:text-4xl font-black text-gray-900 tracking-tight">
+        {{ section.settings.title | default: "Smart Staircase Lighting Systems" }}
+      </h2>
     </div>
 
-    <!-- Product 2 -->
-    <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm hover:shadow-md transition-all flex flex-col justify-between group">
-      <div>
-        <div class="relative bg-slate-50 rounded-xl p-4 mb-4 flex items-center justify-center min-h-[180px]">
-          <span class="absolute top-3 left-3 bg-orange-500 text-white text-[10px] font-extrabold px-2.5 py-1 rounded-md uppercase">TRENDING NOW 100% OFF</span>
-          <img src="https://images.unsplash.com/photo-1507499739999-097706ad8914?auto=format&fit=crop&w=400&q=80" alt="3W Motion Sensor Wall Step Light" class="h-32 object-contain group-hover:scale-105 transition-transform">
-        </div>
-        <h3 class="font-bold text-sm text-slate-900 line-clamp-2">3W Motion Sensor Wall Step Light, LED Foot Light for Stairs</h3>
-        <div class="flex items-center gap-1 my-2 text-amber-500 text-xs font-bold">
-          <span>★ 4.8</span>
-          <span class="text-slate-400 font-normal">(138)</span>
-        </div>
-        <p class="text-xs text-slate-500 line-clamp-2 mb-3">IP65 Waterproof Aluminium Body Concealed Recess Wall Light (Indoor & Outdoor).</p>
-      </div>
-      <div>
-        <div class="flex items-baseline gap-2 mb-3">
-          <span class="text-lg font-black text-slate-900">Rs. 578.00</span>
-          <span class="text-xs text-slate-400 line-through">Rs. 6,800.00</span>
-        </div>
-        <a href="/collections/all" class="w-full bg-slate-950 hover:bg-blue-600 text-white text-xs font-bold py-2.5 rounded-xl block text-center transition-colors">
-          Buy it now
-        </a>
-      </div>
-    </div>
+    <!-- Carousel Controls & View All Link -->
+    <div class="flex items-center justify-between sm:justify-end w-full sm:w-auto gap-4">
+      <a href="/collections/all" class="text-xs sm:text-sm font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1">
+        View All Products &rarr;
+      </a>
 
-    <!-- Product 3 -->
-    <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm hover:shadow-md transition-all flex flex-col justify-between group">
-      <div>
-        <div class="relative bg-slate-50 rounded-xl p-4 mb-4 flex items-center justify-center min-h-[180px]">
-          <span class="absolute top-3 left-3 bg-blue-600 text-white text-[10px] font-extrabold px-2.5 py-1 rounded-md uppercase">NEW GEN 3 - 3L DUAL LIGHT STRIP</span>
-          <img src="https://images.unsplash.com/photo-1550009158-9ebf69173e03?auto=format&fit=crop&w=400&q=80" alt="Relights Pro RGB-W Architectural Motion Controller" class="h-32 object-contain group-hover:scale-105 transition-transform">
-        </div>
-        <h3 class="font-bold text-sm text-slate-900 line-clamp-2">Relights Pro RGB-W Architectural Motion Controller</h3>
-        <div class="flex items-center gap-1 my-2 text-amber-500 text-xs font-bold">
-          <span>★ 4.9</span>
-          <span class="text-slate-400 font-normal">(79)</span>
-        </div>
-        <p class="text-xs text-slate-500 line-clamp-2 mb-3">Full spectrum RGB + Warm White cascading motion lighting controller.</p>
-      </div>
-      <div>
-        <div class="flex items-baseline gap-2 mb-3">
-          <span class="text-lg font-black text-slate-900">Rs. 6,499.00</span>
-          <span class="text-xs text-slate-400 line-through">Rs. 8,999.00</span>
-        </div>
-        <a href="/collections/all" class="w-full bg-slate-950 hover:bg-blue-600 text-white text-xs font-bold py-2.5 rounded-xl block text-center transition-colors">
-          Buy it now
-        </a>
-      </div>
-    </div>
-
-    <!-- Product 4 -->
-    <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm hover:shadow-md transition-all flex flex-col justify-between group">
-      <div>
-        <div class="relative bg-slate-50 rounded-xl p-4 mb-4 flex items-center justify-center min-h-[180px]">
-          <span class="absolute top-3 left-3 bg-purple-600 text-white text-[10px] font-extrabold px-2.5 py-1 rounded-md uppercase">POPULAR</span>
-          <img src="https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=400&q=80" alt="Premium COB LED Light Strip Reel (5 Meters)" class="h-32 object-contain group-hover:scale-105 transition-transform">
-        </div>
-        <h3 class="font-bold text-sm text-slate-900 line-clamp-2">Premium COB LED Light Strip Reel (5 Meters)</h3>
-        <div class="flex items-center gap-1 my-2 text-amber-500 text-xs font-bold">
-          <span>★ 4.9</span>
-          <span class="text-slate-400 font-normal">(112)</span>
-        </div>
-        <p class="text-xs text-slate-500 line-clamp-2 mb-3">Continuous dotless ultra-bright COB linear LED lighting.</p>
-      </div>
-      <div>
-        <div class="flex items-baseline gap-2 mb-3">
-          <span class="text-lg font-black text-slate-900">Rs. 1,299.00</span>
-          <span class="text-xs text-slate-400 line-through">Rs. 1,999.00</span>
-        </div>
-        <a href="/collections/all" class="w-full bg-slate-950 hover:bg-blue-600 text-white text-xs font-bold py-2.5 rounded-xl block text-center transition-colors">
-          Buy it now
-        </a>
+      <!-- Slider Arrows -->
+      <div class="flex items-center gap-2">
+        <button type="button" id="featured-carousel-prev" aria-label="Previous Slide" class="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-gray-200 hover:border-gray-900 bg-white hover:bg-gray-900 text-gray-700 hover:text-white flex items-center justify-center transition-all shadow-sm cursor-pointer">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
+        </button>
+        <button type="button" id="featured-carousel-next" aria-label="Next Slide" class="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-gray-200 hover:border-gray-900 bg-white hover:bg-gray-900 text-gray-700 hover:text-white flex items-center justify-center transition-all shadow-sm cursor-pointer">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+        </button>
       </div>
     </div>
   </div>
+
+  <!-- Outer Overflow-Hidden Wrapper to ensure crisp boundaries -->
+  <div class="w-full overflow-hidden">
+    <!-- Dynamic Carousel Container (1 Full Card on mobile, 3 Cards per row on Desktop) -->
+    {%- assign products_list = section.settings.collection.products -%}
+    {%- if products_list == blank or products_list.size == 0 -%}
+      {%- assign products_list = collections.all.products -%}
+    {%- endif -%}
+
+    <div id="FeaturedProductsCarousel" class="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-4 scrollbar-none">
+      {%- for product in products_list -%}
+        <div class="carousel-card-item w-full min-w-full sm:w-[calc((100%-24px)/2)] sm:min-w-[calc((100%-24px)/2)] lg:w-[calc((100%-48px)/3)] lg:min-w-[calc((100%-48px)/3)] snap-start flex-shrink-0 bg-white border border-gray-100 rounded-3xl p-5 sm:p-6 shadow-sm hover:shadow-xl transition-all flex flex-col justify-between group">
+          
+          <div class="space-y-4">
+            <!-- Card Image & Badge Tag -->
+            <div class="block relative aspect-square sm:aspect-[4/3] lg:aspect-square bg-gray-50 rounded-2xl overflow-hidden border border-gray-100">
+              {%- if product.tags contains 'Bestseller' or product.tags contains 'Best Seller' -%}
+                <span class="absolute top-3 left-3 bg-gray-900 text-white text-[9px] sm:text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider z-10">
+                  AMAZON CHOICE | BESTSELLER
+                </span>
+              {%- elsif product.tags contains 'Premium' -%}
+                <span class="absolute top-3 left-3 bg-blue-600 text-white text-[9px] sm:text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider z-10">
+                  PREMIUM PICK
+                </span>
+              {%- else -%}
+                <span class="absolute top-3 left-3 bg-gray-800 text-white text-[9px] sm:text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider z-10">
+                  SMART LIGHTING
+                </span>
+              {%- endif -%}
+
+              <a href="{{ product.url }}" class="block w-full h-full">
+                {%- if product.featured_image != blank -%}
+                  <img src="{{ product.featured_image | image_url: width: 800 }}" alt="{{ product.title | escape }}" width="800" height="800" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                {%- else -%}
+                  <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=800" alt="{{ product.title | escape }}" width="800" height="800" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                {%- endif -%}
+              </a>
+            </div>
+
+            <!-- Rating -->
+            <div class="flex items-center gap-1 text-amber-400 text-xs font-bold pt-1">
+              ★★★★★ <span class="text-gray-900 ml-1">4.8</span> <span class="text-gray-400 font-normal">(342 reviews)</span>
+            </div>
+
+            <!-- Title & Description -->
+            <div class="space-y-1">
+              <h3 class="font-bold text-base sm:text-lg text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-1">
+                <a href="{{ product.url }}">{{ product.title }}</a>
+              </h3>
+              <p class="text-xs text-gray-500 line-clamp-2 leading-relaxed">
+                {{ product.description | strip_html | truncate: 110 | default: 'Automatic step lighting system with dual motion sensors and cascading illumination.' }}
+              </p>
+            </div>
+          </div>
+
+          <!-- Footer Price & Action Buttons -->
+          <div class="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between">
+            <div>
+              <div class="flex items-baseline gap-1.5">
+                <span class="text-lg sm:text-xl font-black text-gray-900 font-mono">
+                  ₹{{ product.price | money_without_currency }}
+                </span>
+                {%- if product.compare_at_price > product.price -%}
+                  <span class="text-xs text-gray-400 line-through font-mono">
+                    ₹{{ product.compare_at_price | money_without_currency }}
+                  </span>
+                {%- endif -%}
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <a href="{{ product.url }}" class="px-3.5 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 text-xs font-bold rounded-xl transition-all">
+                Configure
+              </a>
+
+              {% form 'product', product %}
+                <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+                <button type="submit" class="px-3.5 py-2 bg-[#111111] hover:bg-black text-white text-xs font-bold rounded-xl shadow-sm transition-all flex items-center gap-1.5 cursor-pointer">
+                  <span>Add</span>
+                </button>
+              {% endform %}
+            </div>
+          </div>
+
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+
+  <!-- Mobile Swipe Indicator Dots -->
+  <div id="CarouselIndicators" class="flex sm:hidden items-center justify-center gap-1.5 pt-1">
+    {%- for product in products_list -%}
+      <div class="carousel-dot w-2 h-2 rounded-full bg-gray-200 transition-all {% if forloop.first %}w-6 bg-blue-600{% endif %}"></div>
+    {%- endfor -%}
+  </div>
+
 </section>
+
+<!-- Carousel Scroll JavaScript Handler -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const container = document.getElementById('FeaturedProductsCarousel');
+    const prevBtn = document.getElementById('featured-carousel-prev');
+    const nextBtn = document.getElementById('featured-carousel-next');
+    const dots = document.querySelectorAll('.carousel-dot');
+
+    if (!container) return;
+
+    const scrollAmount = () => {
+      const card = container.querySelector('.carousel-card-item');
+      return card ? card.offsetWidth + 24 : 320;
+    };
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', () => {
+        container.scrollBy({ left: -scrollAmount(), behavior: 'smooth' });
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', () => {
+        container.scrollBy({ left: scrollAmount(), behavior: 'smooth' });
+      });
+    }
+
+    // Active dot indicator update on scroll
+    if (dots.length > 0) {
+      container.addEventListener('scroll', () => {
+        const cardWidth = scrollAmount();
+        const activeIndex = Math.round(container.scrollLeft / cardWidth);
+
+        dots.forEach((dot, index) => {
+          if (index === activeIndex) {
+            dot.className = 'carousel-dot w-6 h-2 rounded-full bg-blue-600 transition-all';
+          } else {
+            dot.className = 'carousel-dot w-2 h-2 rounded-full bg-gray-200 transition-all';
+          }
+        });
+      });
+    }
+  });
+</script>
+
+<style>
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .scrollbar-none {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+</style>
 
 {% schema %}
 {
   "name": "Featured Products",
-  "settings": []
+  "settings": [
+    {
+      "type": "text",
+      "id": "badge",
+      "label": "Badge Tagline",
+      "default": "Featured Collection"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Smart Staircase Lighting Systems"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Shopify Collection"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Products"
+    }
+  ]
 }
 {% endschema %}

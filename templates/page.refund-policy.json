@@ -9,12 +9,12 @@
  */
 {
   "sections": {
-    "main_product": {
-      "type": "main-product",
+    "main_refund_policy": {
+      "type": "main-refund-policy",
       "settings": {}
     }
   },
   "order": [
-    "main_product"
+    "main_refund_policy"
   ]
 }

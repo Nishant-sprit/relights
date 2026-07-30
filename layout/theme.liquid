@@ -4,16 +4,11 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="theme-color" content="#2563eb">
-
+    <meta name="theme-color" content="">
     <link rel="canonical" href="{{ canonical_url }}">
-    <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    {%- if page_description -%}
-      <meta name="description" content="{{ page_description | escape }}">
+    {%- if settings.favicon != blank -%}
+      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
     {%- endif -%}
 
     <title>
@@ -23,34 +18,36 @@
       {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
     </title>
 
+    {% if page_description %}
+      <meta name="description" content="{{ page_description | escape }}">
+    {% endif %}
+
+    {% render 'meta-tags' %}
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com" defer></script>
+
     {{ 'theme.css' | asset_url | stylesheet_tag }}
-    {{ 'app-bundle.css' | asset_url | stylesheet_tag }}
 
     {{ content_for_header }}
-
-    <script>
-      document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
-      window.Shopify = window.Shopify || {};
-      window.Shopify.theme = {
-        name: 'Relights Smart Lighting',
-        moneyFormat: {{ shop.money_format | json }}
-      };
-    </script>
   </head>
 
-  <body class="template-{{ template.name }} theme-relights bg-white text-slate-800 antialiased">
-    <!-- React Interactive App Mounting Root -->
-    <div id="root">
-      {% section 'header' %}
+  <body class="min-h-screen bg-white text-gray-900 font-sans antialiased flex flex-col justify-between selection:bg-blue-500 selection:text-white">
+    <div>
+      {% sections 'header-group' %}
 
-      <main id="MainContent" class="content-for-layout focus-none" tabindex="-1">
+      <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
         {{ content_for_layout }}
       </main>
-
-      {% section 'footer' %}
     </div>
 
-    {{ 'app-bundle.js' | asset_url | script_tag }}
-    {{ 'theme.js' | asset_url | script_tag }}
+    {% sections 'footer-group' %}
+
+    {% section 'main-cart-drawer' %}
+
+    <script src="{{ 'interactive-staircase.js' | asset_url }}" defer></script>
+    <script src="{{ 'theme.js' | asset_url }}" defer></script>
   </body>
 </html>

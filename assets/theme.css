@@ -1,81 +1,41 @@
-/* Relights Theme CSS - Modern Dark Lighting Aesthetics */
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+/* Relights & LuminaStep Shopify Custom Styles */
 
-:root {
-  --color-primary: #f59e0b;
-  --color-secondary: #06b6d4;
-  --color-bg: #0b0f17;
-  --font-family: 'Outfit', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
 }
 
-* {
-  box-sizing: border-box;
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 25s linear infinite;
 }
 
-body {
-  font-family: var(--font-family);
-  background-color: #0b0f17 !important;
-  color: #f8fafc !important;
-  margin: 0;
-  padding: 0;
-  min-height: 100vh;
+.animate-marquee:hover {
+  animation-play-state: paused;
 }
 
-/* Accessibility skip link */
-.skip-to-content-link:focus {
-  position: fixed;
-  top: 1rem;
-  left: 1rem;
-  z-index: 9999;
-  background: #f59e0b;
-  color: #020617;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.75rem;
-  font-weight: 800;
+.hero-mask {
+  background: radial-gradient(100% 100% at 50% 0%, rgba(59, 130, 246, 0.08) 0%, rgba(255, 255, 255, 0) 100%);
 }
 
-/* Glassmorphism card utilities */
-.glass-panel {
-  background: rgba(21, 28, 40, 0.75);
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+.stair-step-item {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Stair step light glow animation */
-@keyframes stepPulse {
-  0% {
-    box-shadow: 0 0 10px rgba(245, 158, 11, 0.2);
-  }
-  50% {
-    box-shadow: 0 0 25px rgba(245, 158, 11, 0.8), 0 0 40px rgba(245, 158, 11, 0.4);
-  }
-  100% {
-    box-shadow: 0 0 10px rgba(245, 158, 11, 0.2);
-  }
+.step-lit {
+  transform: scaleX(1.02);
 }
 
-.stair-step-glow {
-  animation: stepPulse 2s infinite ease-in-out;
+.led-light-bar {
+  pointer-events: none;
 }
 
-/* Cart Drawer visibility classes */
-.cart-drawer-overlay.active {
-  visibility: visible !important;
-  opacity: 1 !important;
+/* Hide scrollbars for clean horizontal sliders */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
 }
-
-.cart-drawer-overlay.active .cart-drawer-content {
-  transform: translateX(0) !important;
-}
-
-/* Fallback base styles for standard HTML elements */
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-button {
-  cursor: pointer;
-  border: none;
-  background: none;
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

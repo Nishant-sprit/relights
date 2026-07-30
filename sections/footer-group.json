@@ -8,13 +8,15 @@
  * ------------------------------------------------------------
  */
 {
+  "name": "t:sections.footer.name",
+  "type": "footer",
   "sections": {
-    "main_product": {
-      "type": "main-product",
+    "footer": {
+      "type": "footer",
       "settings": {}
     }
   },
   "order": [
-    "main_product"
+    "footer"
   ]
 }
