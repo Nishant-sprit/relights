@@ -1,0 +1,59 @@
+<header class="sticky top-0 z-40 w-full border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-xl">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-20">
+      
+      <!-- Brand / Logo -->
+      <div class="flex items-center gap-3">
+        <a href="/" class="flex items-center gap-2 text-2xl font-extrabold tracking-tight text-slate-100 group">
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-amber-500 to-yellow-300 flex items-center justify-center text-slate-950 shadow-[0_0_15px_rgba(245,158,11,0.5)] group-hover:scale-105 transition-transform">
+            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+              <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"></path>
+            </svg>
+          </div>
+          <span>RELIGHTS<span class="text-amber-400">.</span></span>
+        </a>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold text-slate-300">
+        {% for link in linklists.main-menu.links %}
+          <a href="{{ link.url }}" class="hover:text-amber-400 transition-colors py-1">
+            {{ link.title }}
+          </a>
+        {% else %}
+          <a href="/" class="text-amber-400 hover:text-amber-300">Home</a>
+          <a href="/collections/all" class="hover:text-amber-400">Products</a>
+          <a href="#simulator" class="hover:text-amber-400">Stair Simulator</a>
+          <a href="#before-after" class="hover:text-amber-400">Transformations</a>
+        {% endfor %}
+      </nav>
+
+      <!-- Cart & Actions -->
+      <div class="flex items-center gap-4">
+        <button id="OpenCartDrawerBtn" class="relative p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-200 hover:border-amber-500/50 hover:text-amber-400 transition-all">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+          </svg>
+          <span class="cart-count-badge absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-amber-500 text-slate-950 font-black text-xs flex items-center justify-center">
+            {{ cart.item_count }}
+          </span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "default": "main-menu",
+      "label": "Main Navigation Menu"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,74 @@
+<section id="simulator" class="py-20 bg-slate-900/50 border-y border-slate-800">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-5xl font-extrabold text-slate-100 mb-4">
+        Interactive Staircase Lighting Simulator
+      </h2>
+      <p class="text-slate-400 max-w-xl mx-auto">
+        Customize light colors, step count, animation speeds, and motion sensor triggers in real-time.
+      </p>
+    </div>
+
+    <!-- Simulator Container -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+      <!-- Controls Panel -->
+      <div class="bg-slate-950 p-6 rounded-2xl border border-slate-800 space-y-6">
+        <h3 class="text-lg font-bold text-slate-100 flex items-center gap-2">
+          <span>⚙️ Lighting Customizer</span>
+        </h3>
+
+        <!-- Color Selector -->
+        <div>
+          <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Light Warmth / Color</label>
+          <div class="grid grid-cols-4 gap-2">
+            <button class="stair-color-btn p-3 rounded-xl border border-amber-500/50 bg-amber-500/20 text-amber-300 font-bold text-xs hover:bg-amber-500/30 transition-all" data-color="#f59e0b">
+              Warm 3000K
+            </button>
+            <button class="stair-color-btn p-3 rounded-xl border border-sky-500/50 bg-sky-500/20 text-sky-300 font-bold text-xs hover:bg-sky-500/30 transition-all" data-color="#38bdf8">
+              Cool 6000K
+            </button>
+            <button class="stair-color-btn p-3 rounded-xl border border-emerald-500/50 bg-emerald-500/20 text-emerald-300 font-bold text-xs hover:bg-emerald-500/30 transition-all" data-color="#10b981">
+              Emerald
+            </button>
+            <button class="stair-color-btn p-3 rounded-xl border border-purple-500/50 bg-purple-500/20 text-purple-300 font-bold text-xs hover:bg-purple-500/30 transition-all" data-color="#a855f7">
+              Neon Purple
+            </button>
+          </div>
+        </div>
+
+        <!-- Step Count Slider -->
+        <div>
+          <div class="flex justify-between text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">
+            <span>Stair Steps</span>
+            <span id="stairCountVal" class="text-amber-400">10 Steps</span>
+          </div>
+          <input id="stairCountInput" type="range" min="6" max="16" value="10" class="w-full accent-amber-500 bg-slate-800 rounded-lg cursor-pointer">
+        </div>
+
+        <!-- Trigger Motion Button -->
+        <button id="triggerMotionBtn" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 font-extrabold shadow-lg hover:from-amber-400 hover:to-yellow-300 transition-all">
+          ⚡ Trigger Motion Sensor Sequence
+        </button>
+      </div>
+
+      <!-- Preview Canvas / Visualizer -->
+      <div class="lg:col-span-2 bg-slate-950 p-8 rounded-2xl border border-slate-800 relative overflow-hidden flex flex-col items-center justify-center min-h-[420px]">
+        <div id="staircasePreview" class="w-full flex flex-col items-center gap-3">
+          <!-- Dynamic Steps rendered via JavaScript -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Staircase Simulator",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Staircase Simulator"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,27 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "heading": "Transform Your Staircase with Smart Motion Lighting",
+        "subheading": "Automated step-by-step illumination, customizable RGBW colors, motion sensors, and seamless smart home integrations."
+      }
+    },
+    "simulator": {
+      "type": "interactive-staircase",
+      "settings": {}
+    },
+    "featured_products": {
+      "type": "featured-products",
+      "settings": {
+        "title": "Smart Stair Controllers & LED Lights",
+        "products_to_show": 4
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "simulator",
+    "featured_products"
+  ]
+}

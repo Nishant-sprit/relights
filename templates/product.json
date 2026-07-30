@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "main": {
+      "type": "featured-products",
+      "settings": {
+        "title": "Related Lighting Products",
+        "products_to_show": 4
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

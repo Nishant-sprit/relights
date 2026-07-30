@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "main": {
+      "type": "featured-products",
+      "settings": {
+        "title": "All Smart Lighting Products",
+        "products_to_show": 8
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

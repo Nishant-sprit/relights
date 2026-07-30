@@ -1,0 +1,51 @@
+<section class="relative py-24 md:py-32 overflow-hidden bg-slate-950">
+  <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-amber-500/10 via-slate-950/80 to-slate-950 pointer-events-none"></div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+    <span class="inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-4 py-1.5 text-xs font-bold text-amber-400 uppercase tracking-widest mb-6">
+      ✨ Next-Gen Motion Light Technology
+    </span>
+
+    <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-slate-100 mb-6 max-w-4xl mx-auto leading-tight">
+      {{ section.settings.heading | default: "Transform Your Staircase with Smart Motion Lighting" }}
+    </h1>
+
+    <p class="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto mb-10">
+      {{ section.settings.subheading | default: "Automated step-by-step illumination, customizable RGBW colors, motion sensors, and seamless smart home integrations." }}
+    </p>
+
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+      <a href="#simulator" class="w-full sm:w-auto bg-gradient-to-r from-amber-500 to-yellow-400 hover:from-amber-400 hover:to-yellow-300 text-slate-950 font-extrabold px-8 py-4 rounded-xl shadow-lg shadow-amber-500/20 transition-all text-base">
+        Try Stair Simulator
+      </a>
+      <a href="/collections/all" class="w-full sm:w-auto border border-slate-800 bg-slate-900/60 hover:bg-slate-800 text-slate-100 font-bold px-8 py-4 rounded-xl transition-all text-base">
+        Explore Collection
+      </a>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero Banner",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading Title",
+      "default": "Transform Your Staircase with Smart Motion Lighting"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading Text",
+      "default": "Automated step-by-step illumination, customizable RGBW colors, motion sensors, and seamless smart home integrations."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Banner"
+    }
+  ]
+}
+{% endschema %}

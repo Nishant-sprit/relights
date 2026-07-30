@@ -1,0 +1,51 @@
+/* Relights Theme CSS - Modern Dark Lighting Aesthetics */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --color-primary: #f59e0b;
+  --color-secondary: #06b6d4;
+  --color-bg: #0b0f17;
+  --font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--color-bg);
+  color: #f8fafc;
+  margin: 0;
+  padding: 0;
+}
+
+/* Glassmorphism card utilities */
+.glass-panel {
+  background: rgba(21, 28, 40, 0.7);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Stair step light glow animation */
+@keyframes stepPulse {
+  0% {
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(245, 158, 11, 0.8), 0 0 40px rgba(245, 158, 11, 0.4);
+  }
+  100% {
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.2);
+  }
+}
+
+.stair-step-glow {
+  animation: stepPulse 2s infinite ease-in-out;
+}
+
+/* Cart Drawer visibility classes */
+.cart-drawer-overlay.active {
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.cart-drawer-overlay.active .cart-drawer-content {
+  transform: translateX(0) !important;
+}

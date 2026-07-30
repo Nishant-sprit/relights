@@ -1,0 +1,24 @@
+{
+  "general": {
+    "search": {
+      "search": "Search smart lights...",
+      "submit": "Search"
+    },
+    "cart": {
+      "title": "Your Cart",
+      "empty": "Your cart is currently empty.",
+      "continue_shopping": "Continue Shopping",
+      "checkout": "Proceed to Checkout",
+      "subtotal": "Subtotal",
+      "free_shipping": "You unlocked Free Shipping!",
+      "free_shipping_away": "Add {{ amount }} more for Free Shipping"
+    },
+    "products": {
+      "add_to_cart": "Add to Cart",
+      "sold_out": "Sold Out",
+      "unavailable": "Unavailable",
+      "regular_price": "Regular price",
+      "sale_price": "Sale price"
+    }
+  }
+}
