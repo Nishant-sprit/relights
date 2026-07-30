@@ -5,17 +5,16 @@ import { SeoHead } from './components/SeoHead';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { CartDrawer } from './components/CartDrawer';
-import { CheckoutModal } from './components/CheckoutModal';
 import { HomeView } from './views/HomeView';
 import { ProductView } from './views/ProductView';
 import { AboutView } from './views/AboutView';
 import { ContactView } from './views/ContactView';
+import { redirectToShopifyCheckout } from './utils/shopifyCheckout';
 
 export default function App() {
   const [currentView, setCurrentView] = useState<PageView>('home');
   const [productViewKey, setProductViewKey] = useState<number>(0);
   const [cartItems, setCartItems] = useState<CartItem[]>([
-    // Initial default item in cart for quick testing
     {
       id: 'cart-32-step-3000k',
       productName: 'Relights Smart Staircase Motion Sensor Controller Kit (32 Steps, 3K Sensor)',
@@ -34,11 +33,9 @@ export default function App() {
     setCurrentView(page);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
-  const [wishlistCount, setWishlistCount] = useState<number>(1);
+
+  const [wishlistCount] = useState<number>(1);
   const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
-  const [isCheckoutOpen, setIsCheckoutOpen] = useState<boolean>(false);
-  const [appliedDiscount, setAppliedDiscount] = useState<number>(0);
-  const [discountCode, setDiscountCode] = useState<string>('');
 
   const handleAddToCart = (newItem: CartItem) => {
     setCartItems((prev) => {
@@ -54,23 +51,18 @@ export default function App() {
   };
 
   const handleBuyNowDirect = (item?: CartItem) => {
-    if (item) {
-      setCartItems([item]);
-    } else if (cartItems.length === 0) {
-      // Default to 24 step kit if cart empty
-      setCartItems([
-        {
-          id: 'cart-32-step-3000k',
-          productName: 'Relights Smart Staircase Motion Sensor Controller Kit (32 Steps, 3K Sensor)',
-          stepOption: STEP_OPTIONS[0],
-          ledColor: LED_COLOR_OPTIONS[0],
-          quantity: 1,
-          unitPrice: STEP_OPTIONS[0].price,
-          image: GALLERY_IMAGES[0].url,
-        },
-      ]);
-    }
-    setIsCheckoutOpen(true);
+    const targetItem = item || (cartItems.length > 0 ? cartItems[0] : {
+      id: 'cart-32-step-3000k',
+      productName: 'Relights Smart Staircase Motion Sensor Controller Kit (32 Steps, 3K Sensor)',
+      stepOption: STEP_OPTIONS[0],
+      ledColor: LED_COLOR_OPTIONS[0],
+      quantity: 1,
+      unitPrice: STEP_OPTIONS[0].price,
+      image: GALLERY_IMAGES[0].url,
+    });
+
+    // Directly redirect to Shopify checkout - zero modal popups
+    redirectToShopifyCheckout([targetItem]);
   };
 
   const handleUpdateQuantity = (id: string, delta: number) => {
@@ -95,7 +87,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-white text-slate-800 font-sans antialiased selection:bg-blue-600 selection:text-white flex flex-col justify-between">
-      {/* SEO Metadata and Structured JSON-LD Schema */}
+      {/* SEO Metadata */}
       <SeoHead currentView={currentView} />
 
       {/* Main App Bar Header */}
@@ -142,23 +134,9 @@ export default function App() {
         cartItems={cartItems}
         onUpdateQuantity={handleUpdateQuantity}
         onRemoveItem={handleRemoveItem}
-        onProceedToCheckout={(discount, code) => {
-          setAppliedDiscount(discount);
-          setDiscountCode(code);
+        onProceedToCheckout={() => {
           setIsCartOpen(false);
-          setIsCheckoutOpen(true);
-        }}
-      />
-
-      {/* Express Checkout Modal */}
-      <CheckoutModal
-        isOpen={isCheckoutOpen}
-        onClose={() => setIsCheckoutOpen(false)}
-        cartItems={cartItems}
-        appliedDiscount={appliedDiscount}
-        discountCode={discountCode}
-        onOrderComplete={() => {
-          setCartItems([]);
+          redirectToShopifyCheckout(cartItems);
         }}
       />
     </div>
