@@ -25,6 +25,7 @@
       {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
     </title>
 
+    <script src="https://cdn.tailwindcss.com"></script>
     {{ 'theme.css' | asset_url | stylesheet_tag }}
 
     {{ content_for_header }}

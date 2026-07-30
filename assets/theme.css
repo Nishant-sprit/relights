@@ -1,24 +1,42 @@
 /* Relights Theme CSS - Modern Dark Lighting Aesthetics */
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 
 :root {
   --color-primary: #f59e0b;
   --color-secondary: #06b6d4;
   --color-bg: #0b0f17;
-  --font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-family: 'Outfit', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 body {
   font-family: var(--font-family);
-  background-color: var(--color-bg);
-  color: #f8fafc;
+  background-color: #0b0f17 !important;
+  color: #f8fafc !important;
   margin: 0;
   padding: 0;
+  min-height: 100vh;
+}
+
+/* Accessibility skip link */
+.skip-to-content-link:focus {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 9999;
+  background: #f59e0b;
+  color: #020617;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  font-weight: 800;
 }
 
 /* Glassmorphism card utilities */
 .glass-panel {
-  background: rgba(21, 28, 40, 0.7);
+  background: rgba(21, 28, 40, 0.75);
   backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
@@ -48,4 +66,16 @@ body {
 
 .cart-drawer-overlay.active .cart-drawer-content {
   transform: translateX(0) !important;
+}
+
+/* Fallback base styles for standard HTML elements */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
 }
