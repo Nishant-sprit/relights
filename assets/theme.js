@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
           body: formData
         });
 
-        if (res.ok) {
+        if (isBuyNow || res.ok) {
           if (isBuyNow) {
             window.location.href = '/checkout';
             return;
@@ -61,26 +61,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
           toggleCartDrawer(true);
         } else {
-          if (isBuyNow) window.location.href = '/checkout';
+          window.location.href = '/checkout';
         }
       } catch (err) {
         console.error('Failed to add item to cart', err);
-        if (isBuyNow) window.location.href = '/checkout';
+        window.location.href = '/checkout';
       }
     });
   });
 
   // Handle all "Buy Now" links/buttons across theme
-  document.addEventListener('click', (e) => {
+  document.addEventListener('click', async (e) => {
     const target = e.target.closest('[data-action="buy-now"]');
     if (target) {
       e.preventDefault();
       const variantId = target.getAttribute('data-variant-id');
       if (variantId) {
-        window.location.href = `/cart/${variantId}:1`;
-      } else {
-        window.location.href = '/checkout';
+        try {
+          await fetch('/cart/add.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ items: [{ id: variantId, quantity: 1 }] })
+          });
+        } catch (err) {}
       }
+      window.location.href = '/checkout';
     }
   });
 });

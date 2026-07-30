@@ -1,49 +1,35 @@
 /**
  * Helper to sync cart items with Shopify's native AJAX cart and redirect to official Shopify Checkout (/checkout).
- * Works seamlessly on live Shopify store domains and handles preview environments cleanly.
+ * Uses Shopify's /cart/add.js API to populate the active Shopify cart session before navigating to /checkout.
  */
 export async function redirectToShopifyCheckout(cartItems: Array<{ id: string; quantity: number }>) {
   try {
-    const isShopifyStore =
-      typeof window !== 'undefined' &&
-      (!!(window as any).Shopify ||
-        window.location.hostname.includes('myshopify.com') ||
-        window.location.hostname.includes('shopify') ||
-        window.location.pathname.startsWith('/theme') ||
-        window.location.pathname.startsWith('/collections') ||
-        window.location.pathname.startsWith('/products'));
+    if (typeof window !== 'undefined') {
+      const payloadItems = cartItems
+        .map((item) => {
+          const numericId = item.id.replace(/[^0-9]/g, '');
+          // Only pass valid numeric variant IDs if available
+          return numericId && numericId.length >= 8
+            ? { id: numericId, quantity: item.quantity || 1 }
+            : null;
+        })
+        .filter(Boolean);
 
-    const variantId = cartItems[0]?.id?.replace(/[^0-9]/g, '') || '1000000000';
-
-    if (isShopifyStore) {
-      const payloadItems = cartItems.map((item) => ({
-        id: item.id.replace(/[^0-9]/g, '') || variantId,
-        quantity: item.quantity || 1,
-      }));
-
-      // Post to Shopify Cart API
-      await fetch('/cart/add.js', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
-        body: JSON.stringify({ items: payloadItems }),
-      }).catch(() => {});
-
-      // Redirect to Shopify native checkout
-      window.location.href = `/cart/${variantId}:${cartItems[0]?.quantity || 1}`;
-      return;
-    }
-
-    // On standalone static preview (e.g. GitHub Pages or Localhost), redirect to /checkout or handle gracefully
-    try {
-      window.location.href = '/checkout';
-    } catch (e) {
-      console.warn('Checkout navigation', e);
+      if (payloadItems.length > 0) {
+        await fetch('/cart/add.js', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          },
+          body: JSON.stringify({ items: payloadItems }),
+        }).catch(() => {});
+      }
     }
   } catch (error) {
-    console.warn('Redirecting to Shopify checkout...', error);
-    window.location.href = '/checkout';
+    console.warn('Cart sync warning:', error);
   }
+
+  // Redirect directly to official Shopify checkout (/checkout)
+  window.location.href = '/checkout';
 }
